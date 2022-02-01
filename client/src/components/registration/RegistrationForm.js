@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import FormError from "../layout/FormError";
 import config from "../../config";
+import newTranslateServerErrors from "../../services/newTranslateServerErrors";
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
     email: "",
     password: "",
     passwordConfirmation: "",
+    name: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -14,61 +16,77 @@ const RegistrationForm = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const validateInput = (payload) => {
-    setErrors({});
-    const { email, password, passwordConfirmation } = payload;
+    const { email, password, passwordConfirmation, name } = payload;
     const emailRegexp = config.validation.email.regexp;
-    let newErrors = {};
+
+    let newErrors = {
+      email: "",
+      name: "",
+      password: "",
+      passwordConfirmation: "",
+    };
+
+    let hasErrors = false;
+
     if (!email.match(emailRegexp)) {
-      newErrors = {
-        ...newErrors,
-        email: "is invalid",
-      };
+      newErrors.email = "Is invalid";
+      hasErrors = true;
+    }
+
+    if (name.trim() == "") {
+      newErrors.name = "Is invalid";
+      hasErrors = true;
     }
 
     if (password.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        password: "is required",
-      };
+      newErrors.password = "Is required";
+      hasErrors = true;
     }
 
-    if (passwordConfirmation.trim() === "") {
-      newErrors = {
-        ...newErrors,
-        passwordConfirmation: "is required",
-      };
-    } else {
-      if (passwordConfirmation !== password) {
-        newErrors = {
-          ...newErrors,
-          passwordConfirmation: "does not match password",
-        };
-      }
+    if (passwordConfirmation.trim() == "") {
+      newErrors.passwordConfirmation = "Is required";
+      hasErrors = true;
     }
 
-    setErrors(newErrors);
+    if (passwordConfirmation !== password) {
+      newErrors.passwordConfirmation = "Does not match password";
+      hasErrors = true;
+    }
+    return hasErrors ? newErrors : null;
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    validateInput(userPayload);
+    const currentErrors = validateInput(userPayload);
+
+    if (currentErrors) {
+      return setErrors(currentErrors);
+    } else {
+      setErrors({});
+    }
+
     try {
-      if (Object.keys(errors).length === 0) {
-        const response = await fetch("/api/v1/users", {
-          method: "post",
-          body: JSON.stringify(userPayload),
-          headers: new Headers({
-            "Content-Type": "application/json",
-          }),
-        });
-        if (!response.ok) {
+      const response = await fetch("/api/v1/users", {
+        method: "post",
+        body: JSON.stringify(userPayload),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
+      if (!response.ok) {
+        if (response.status === 422) {
+          const responseBody = await response.json();
+          const newErrors = newTranslateServerErrors(responseBody.errors);
+
+          return setErrors(newErrors);
+        } else {
           const errorMessage = `${response.status} (${response.statusText})`;
           const error = new Error(errorMessage);
           throw error;
         }
-        const userData = await response.json();
-        setShouldRedirect(true);
       }
+      const userData = await response.json();
+      setShouldRedirect(true);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
@@ -94,6 +112,13 @@ const RegistrationForm = () => {
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Name
+            <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
+            <FormError error={errors.name} />
           </label>
         </div>
         <div>
