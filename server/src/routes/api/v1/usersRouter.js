@@ -1,8 +1,11 @@
 import express from "express";
 import passport from "passport";
 import { User } from "../../../models/index.js";
+import userDogRouter from "./userDogRouter.js";
 
-const usersRouter = new express.Router();
+const usersRouter = new express.Router()
+
+usersRouter.use("/:userId/new", userDogRouter)
 
 usersRouter.post("/", async (req, res) => {
   const { email, password, passwordConfirmation } = req.body;
