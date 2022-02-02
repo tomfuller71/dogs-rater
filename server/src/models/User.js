@@ -6,7 +6,7 @@ const Model = require("./Model");
 const saltRounds = 10;
 
 const uniqueFunc = unique({
-  fields: ["email"],
+  fields: ["email", "name"],
   identifiers: ["id"],
 });
 
@@ -26,11 +26,12 @@ class User extends uniqueFunc(Model) {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["email"],
+      required: ["email", "name"],
 
       properties: {
         email: { type: "string", format: "email" },
         cryptedPassword: { type: "string" },
+        name: { type: "string" },
       },
     };
   }
