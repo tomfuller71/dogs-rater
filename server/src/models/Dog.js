@@ -13,6 +13,7 @@ class Dog extends Model {
         dogName: { type: "string", minLength: 1, maxLength: 30 },
         pictureUrl: { type: "string" },
         userId: { type: ["integer", "string"] },
+        description: { type: "string" }
       },
     };
   }

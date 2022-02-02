@@ -14,4 +14,13 @@ dogsRouter.get("/", async (req, res) => {
   }
 });
 
+dogsRouter.get("/:id", async (req, res) => {
+  try {
+    const dog = await Dog.query().findById(req.params.id)
+    return res.status(200).json({ dog })
+  } catch (error) {
+    return res.status(500).json({ errors: error });
+
+  }
+})
 export default dogsRouter;

@@ -12,3 +12,8 @@
   -moz-tab-size: 4;
   tab-size: 4;
 }
+
+.dog.cell img {
+  min-height: 268px;
+  object-fit: cover;
+}

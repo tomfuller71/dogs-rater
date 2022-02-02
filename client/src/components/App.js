@@ -8,6 +8,7 @@ import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
+import DogShowPage from "./layout/DogShowPage";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -31,6 +32,8 @@ const App = (props) => {
         <Route exact path="/" component={DogsList} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <Route exact path="/dogs" component={DogsList} />
+        <Route exact path="/dogs/:id" component={DogShowPage} />
       </Switch>
     </Router>
   );

@@ -26,14 +26,14 @@ const DogsList = (props) => {
 
   const dogTiles = dogs.map((dog) => {
     return (
-      <DogTile
-        key={dog.id}
-        id={dog.id}
-        rating={dog.rating}
-        name={dog.dogName}
-        pictureUrl={dog.pictureUrl}
-        dog={dog}
-      />
+        <DogTile
+          key={dog.id}
+          id={dog.id}
+          rating={dog.rating}
+          name={dog.dogName}
+          pictureUrl={dog.pictureUrl}
+          dog={dog}
+        />
     );
   });
 
