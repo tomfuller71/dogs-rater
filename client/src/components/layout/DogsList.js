@@ -14,7 +14,6 @@ const DogsList = (props) => {
         throw error;
       }
       const dogData = await response.json();
-
       setDogs(dogData.dogs);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
