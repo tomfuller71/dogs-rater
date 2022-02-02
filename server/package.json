@@ -47,11 +47,11 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.1",
+    "cookie-session": "^2.0.0",
+    "express": "^4.17.2",
     "dotenv": "^8.2.0",
-    "bcrypt": "^5.0.0",
-    "body-parser": "^1.19.0",
-    "cookie-session": "^1.4.0",
-    "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "knex": "^0.21.16",
     "morgan": "^1.10.0",
@@ -59,6 +59,6 @@
     "objection-unique": "^1.2.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.5.1"
+    "pg": "^8.7.1"
   }
 }
