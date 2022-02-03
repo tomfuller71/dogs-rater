@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
 import DogsList from "./layout/DogsList";
-
+import AuthenticatedRoute from "./authentication/AuthenticatedRoute"
 import getCurrentUser from "../services/getCurrentUser";
 import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
@@ -33,7 +33,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/dogs" component={DogsList} />
-        <Route exact path="/dogs/:id" component={DogShowPage} />
+        <Route exact path="/dogs/:id" render={(props) => <DogShowPage user={currentUser} {...props} />} />
       </Switch>
     </Router>
   );
