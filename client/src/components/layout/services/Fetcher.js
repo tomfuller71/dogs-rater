@@ -1,4 +1,5 @@
 import _ from "lodash"
+import translateServerErrors from "./translateServerErrors.js"
 /**
  * A helper class for fetch api:
  * - static method `.get`
@@ -20,7 +21,7 @@ class Fetcher {
   static async post(route, body, options = {}) {
 
     const validationStatus = options.validationStatus ?? 422
-    const validationErrorParser = options.validationErrorParser ?? this.translateServerErrors
+    const validationErrorParser = options.validationErrorParser ??translateServerErrors
 
     const response = {
       ok: false,
@@ -85,18 +86,14 @@ class Fetcher {
     }
   }
 
-  static translateServerErrors(errors) {
+  // Alt version of error parser that doesn't mutate key case - may then use for <input> specific errors rather than have all in callout in one block
+  static parseObjectionValidationErrors(errors) {
     let serializedErrors = {}
-
-    Object.keys(errors).forEach((key) => {
-      const messages = errors[key].map((error) => {
-        const field = _.startCase(key)
-        serializedErrors = {
-          ...serializedErrors,
-          [field]: error.message,
-        }
+    for (const key of Object.keys(errors)) {
+      errors[key].forEach((error) => {
+        serializedErrors[key] = `${_.startCase(key)} ${error.message}`
       })
-    })
+    }
     return serializedErrors
   }
 }
