@@ -17,19 +17,16 @@ dogsRouter.get("/", async (req, res) => {
 
 dogsRouter.post("/new", async (req, res) => {
   const { body } = req;
-  console.log(body);
   const formInput = cleanUserInput(body);
-  console.log(formInput);
+  formInput.userId = req.user.id
 
   try {
     const dog = await Dog.query().insertAndFetch(formInput);
-    console.log(dog);
     res.status(200).json(dog);
   } catch (error) {
     if (error instanceof ValidationError) {
       res.status(422).json({ errors: error.data });
     } else {
-      console.log(error);
       res.status(500).json({ errors: error });
     }
   }

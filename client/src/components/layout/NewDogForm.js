@@ -1,14 +1,14 @@
 import React, { useState } from "react"
-import ErrorList from "./ErrorList.js"
 import { Redirect } from "react-router-dom";
+
 import Fetcher from "./services/Fetcher.js";
+import ErrorList from "./ErrorList.js"
 
 const NewDogForm = ({ user }) => {
   const defaultFormValue = {
     dogName: "",
     pictureUrl: "",
-    description: "",
-    userId: user.id,
+    description: ""
   };
 
   const [newDog, setNewDog] = useState(defaultFormValue);
