@@ -4,7 +4,7 @@ class DogSeeder {
   static async seed() {
     await Dog.query().insert({
       dogName: "Penny",
-      pictureUrl: "https://ca.slack-edge.com.T02FDAF2S8L-U02FBQV6JBZ-e529da920ecc-512",
+      pictureUrl: "https://ca.slack-edge.com/T02FDAF2S8L-U02FBQV6JBZ-e529da920ecc-512",
       userId: 1,
     });
     await Dog.query().insert({
