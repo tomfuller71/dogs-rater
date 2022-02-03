@@ -11,8 +11,6 @@ class Review extends Model {
       required: ["rating"],
       properties: {
         rating: { type: ["integer", "string"] },
-        upvotes: { type: ["integer", "string"] },
-        downvotes: { type: ["integer", "string"] },
         dogId: { type: ["integer", "string"] },
       },
     };

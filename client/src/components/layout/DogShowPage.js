@@ -4,8 +4,13 @@ import ReviewTile from "./ReviewTile";
 import Fetcher from "./services/Fetcher.js";
 
 const DogShowPage = (props) => {
-  const [dog, setDog] = useState({});
-  const [reviews, setReviews] = useState([]);
+  const [dog, setDog] = useState({
+    dogName: "",
+    userId: "",
+    description: "",
+    pictureUrl: "",
+    reviews: [],
+  });
   const dogId = props.match.params.id;
 
   const getDog = async () => {
@@ -18,28 +23,19 @@ const DogShowPage = (props) => {
       }
       const body = await response.json();
       setDog(body.dog);
+
       return true;
     } catch (error) {
       console.log(error);
       return false;
     }
   };
-  const getReviews = async () => {
-    const response = await Fetcher.get(`/api/v1/reviews/${dogId}`);
-    if (response.ok) {
-      setReviews(response.data.reviews);
-    }
-  };
-  const getPageData = async () => {
-    getDog();
-    getReviews();
-  };
 
   useEffect(() => {
-    getPageData();
+    getDog();
   }, []);
 
-  const reviewsList = reviews.map((review) => {
+  const reviewsList = dog.reviews.map((review) => {
     return (
       <ReviewTile
         key={review.id}
@@ -59,7 +55,7 @@ const DogShowPage = (props) => {
     <div className="grid-container">
       <h1>{dog.dogName}</h1>
       <div className="grid-x grid-margin-x grid-padding-x">
-        <div className="cell small-12 large-6 dog-show fixed-container">
+        <div className="cell small-12 large-6 fixed-container">
           {dogDescription}
           <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
         </div>
