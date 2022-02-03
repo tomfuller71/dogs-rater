@@ -15,7 +15,7 @@ const NewDogForm = ({ user }) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const getNewDog = async () => {
-    const response = await Fetcher.post(`/api/v1/dogs/new`, newDog);
+    const response = await Fetcher.post(`/api/v1/dogs`, newDog);
     if (response.ok) {
       return setShouldRedirect(true);
     }
