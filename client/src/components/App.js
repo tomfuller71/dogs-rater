@@ -9,6 +9,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute.js";
+import DogShowPage from "./layout/DogShowPage";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -37,6 +38,8 @@ const App = (props) => {
           component={NewDogForm}
           user={currentUser}
         />
+        <Route exact path="/dogs" component={DogsList} />
+        <Route exact path="/dogs/:id" component={DogShowPage} />
       </Switch>
     </Router>
   );
