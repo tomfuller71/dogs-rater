@@ -34,7 +34,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <AuthenticatedRoute
-          exact path="/dogs/new"
+          exact path="/dogs"
           component={NewDogForm}
           user={currentUser}
         />

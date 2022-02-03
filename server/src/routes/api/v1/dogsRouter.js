@@ -15,7 +15,7 @@ dogsRouter.get("/", async (req, res) => {
   }
 });
 
-dogsRouter.post("/new", async (req, res) => {
+dogsRouter.post("/", async (req, res) => {
   const { body } = req;
   const formInput = cleanUserInput(body);
   formInput.userId = req.user.id

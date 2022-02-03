@@ -7,13 +7,11 @@ import ErrorList from "./ErrorList.js"
 const NewDogForm = ({ user }) => {
   const defaultFormValue = {
     dogName: "",
-    pictureUrl: "",
     description: ""
   };
 
   const [newDog, setNewDog] = useState(defaultFormValue);
   const [errors, setErrors] = useState([]);
-  const [pictureUrl, setPictureUrl] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const getNewDog = async () => {
@@ -41,17 +39,8 @@ const NewDogForm = ({ user }) => {
     setNewDog(defaultFormValue);
   };
 
-  const testPicture = () => {
-    setPictureUrl(newDog.pictureUrl);
-  };
-
   if (shouldRedirect) {
     return <Redirect push to="/" />;
-  }
-
-  let picture = null;
-  if (pictureUrl) {
-    picture = <img src={pictureUrl} alt="test dog picture" />;
   }
 
   return (
@@ -68,16 +57,6 @@ const NewDogForm = ({ user }) => {
                 name="dogName"
                 value={newDog.dogName}
                 onChange={handleInputChange}
-              />
-            </label>
-
-            <label>
-              Picture (URL):
-              <input
-                type="text"
-                name="pictureUrl"
-                onChange={handleInputChange}
-                value={newDog.pictureUrl}
               />
             </label>
 
@@ -102,17 +81,8 @@ const NewDogForm = ({ user }) => {
                 value="Clear Form"
                 onClick={clearForm}
               />
-              <input
-                className="button"
-                type="button"
-                value="Test URL"
-                onClick={testPicture}
-              />
             </div>
           </form>
-          <div>
-            {picture}
-          </div>
         </div>
       </div>
     </div>
