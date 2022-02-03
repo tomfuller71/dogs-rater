@@ -44,46 +44,43 @@ const NewDogForm = ({ user }) => {
   }
 
   return (
-    <div className="grid-container">
-      <div className="grid-x grid-margin-x">
-        <div className="cell small-10 medium-8">
-          <h1>Add a New Dog</h1>
-          <ErrorList errors={errors} />
-          <form onSubmit={handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="dogName"
-                value={newDog.dogName}
-                onChange={handleInputChange}
-              />
-            </label>
-
-            <label>
-              Description (Optional):
-              <input
-                type="text"
-                name="description"
-                onChange={handleInputChange}
-                value={newDog.description}
-              />
-            </label>
-            <div className="button-group">
-              <input
-                className="button"
-                type="submit"
-                value="Submit"
-              />
-              <input
-                className="button"
-                type="button"
-                value="Clear Form"
-                onClick={clearForm}
-              />
-            </div>
-          </form>
-        </div>
+    <div className="grid-x grid-margin-x">
+      <div className="cell small-10 medium-8">
+        <h1>Add a New Dog</h1>
+        <ErrorList errors={errors} />
+        <form onSubmit={handleSubmit}>
+          <label>
+            Name:
+            <input
+              type="text"
+              name="dogName"
+              value={newDog.dogName}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Description (Optional):
+            <input
+              type="text"
+              name="description"
+              onChange={handleInputChange}
+              value={newDog.description}
+            />
+          </label>
+          <div className="button-group">
+            <input
+              className="button"
+              type="submit"
+              value="Submit"
+            />
+            <input
+              className="button"
+              type="button"
+              value="Clear Form"
+              onClick={clearForm}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );
