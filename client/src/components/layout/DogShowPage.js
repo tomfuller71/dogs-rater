@@ -21,7 +21,6 @@ const DogShowPage = (props) => {
   useEffect(() => {
     getDog();
   }, []);
-  console.log(dog);
   return (
     <div className="grid-container">
             <h1>{dog.dogName}</h1>
