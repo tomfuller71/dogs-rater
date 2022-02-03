@@ -1,58 +1,57 @@
 import React, { useState } from "react"
 import ErrorList from "./ErrorList.js"
+import { Redirect } from "react-router-dom";
+import Fetcher from "./services/Fetcher.js";
 
-import Fetcher from "./services/Fetcher.js"
-
-const NewDogForm = props => {
-  const [newDog, setNewDog] = useState({
-    name: "",
+const NewDogForm = ({ user }) => {
+  const defaultFormValue = {
+    dogName: "",
     pictureUrl: "",
-    description: ""
-  })
+    description: "",
+    userId: user.id,
+  };
 
-  const [errors, setErrors] = useState([])
-  const [pictureUrl, setPictureUrl] = useState("")
+  const [newDog, setNewDog] = useState(defaultFormValue);
+  const [errors, setErrors] = useState([]);
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const getNewDog = async () => {
-    const id = props.match.params.id
-   const response = await Fetcher.post(`/api/v1/users/${id}/new`, newDog)
-   debugger
-    if(response.ok) {
-      //redirect to show
-    } else { 
-      return setErrors(response.validationErrors)
+    const response = await Fetcher.post(`/api/v1/dogs/new`, newDog);
+    if (response.ok) {
+      return setShouldRedirect(true);
     }
-  }
+    setErrors(response.validationErrors);
+  };
 
-  const handleInputChange = event => {
-    const { name, value } = event.currentTarget
+  const handleInputChange = (event) => {
+    const { name, value } = event.currentTarget;
     setNewDog({
       ...newDog,
-      [name]: value
-    })
-  }
-  
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (event) => {
-    event.preventDefault()
-    getNewDog()
-  }
+    event.preventDefault();
+    getNewDog();
+  };
 
   const clearForm = () => {
-    setNewDog({
-      name: "",
-      pictureUrl: "",
-      description: ""
-    })
+    setNewDog(defaultFormValue);
+  };
+
+  const testPicture = () => {
+    setPictureUrl(newDog.pictureUrl);
+  };
+
+  if (shouldRedirect) {
+    return <Redirect push to="/" />;
   }
 
-  const testPicture = (event) => {
-    event.preventDefault()
-    setPictureUrl(newDog.pictureUrl)
-  }
-
-  let picture = null
+  let picture = null;
   if (pictureUrl) {
-    picture = (<img src={pictureUrl} alt="test dog picture"/>)
+    picture = <img src={pictureUrl} alt="test dog picture" />;
   }
 
   return (
@@ -62,25 +61,28 @@ const NewDogForm = props => {
           <h1>Add a New Dog</h1>
           <ErrorList errors={errors} />
           <form onSubmit={handleSubmit}>
-            <label>Name:
-              <input 
-              type="text"
-              name="name"
-              value = {newDog.name}
-              onChange={handleInputChange}
-              />
-            </label>
-
-            <label>Picture (URL):
+            <label>
+              Name:
               <input
-              type="text"
-              name="pictureUrl"
-              onChange={handleInputChange}
-              value={newDog.pictureUrl}
+                type="text"
+                name="dogName"
+                value={newDog.dogName}
+                onChange={handleInputChange}
               />
             </label>
 
-            <label>Description (Optional):
+            <label>
+              Picture (URL):
+              <input
+                type="text"
+                name="pictureUrl"
+                onChange={handleInputChange}
+                value={newDog.pictureUrl}
+              />
+            </label>
+
+            <label>
+              Description (Optional):
               <input
                 type="text"
                 name="description"
@@ -88,8 +90,8 @@ const NewDogForm = props => {
                 value={newDog.description}
               />
             </label>
-            <div className ="button-group">
-              <input 
+            <div className="button-group">
+              <input
                 className="button"
                 type="submit"
                 value="Submit"
@@ -113,8 +115,8 @@ const NewDogForm = props => {
           </div>
         </div>
       </div>
-    </div>  
-  )
-}
+    </div>
+  );
+};
 
 export default NewDogForm

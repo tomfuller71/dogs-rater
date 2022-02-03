@@ -6,11 +6,13 @@ class DogSeeder {
       dogName: "Penny",
       pictureUrl: "https://ca.slack-edge.com.T02FDAF2S8L-U02FBQV6JBZ-e529da920ecc-512",
       userId: 1,
+      description: "Best dog in the world!"
     });
     await Dog.query().insert({
       dogName: "Steve",
       pictureUrl: "https://i.insider.com/5484d9d1eab8ea3017b17e29?width=600&format=jpeg&auto=webp",
       userId: 2,
+      description: "Flappy ears aplenty, much wow!"
     });
     await Dog.query().insert({
       dogName: "Frankie",
