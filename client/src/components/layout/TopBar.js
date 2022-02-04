@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
+import AddDogButton from "./AddDogButton.js";
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
@@ -15,9 +16,12 @@ const TopBar = ({ user }) => {
   ];
 
   const authenticatedListItems = [
-    <li key="sign-out">
-      <SignOutButton />
-    </li>,
+      <li key="add-dog">
+        <AddDogButton userId={user?.id}/>
+      </li>,
+      <li key="sign-out">
+        <SignOutButton />
+      </li>,
   ];
 
   return (
