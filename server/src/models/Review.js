@@ -8,12 +8,12 @@ class Review extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["rating"],
+      required: ["rating", "description"],
       properties: {
-        rating: { type: "string" },
-        upvotes: { type: ["integer", "string"] },
-        downvotes: { type: ["integer", "string"] },
+        rating: { type: ["integer", "string"] },
         dogId: { type: ["integer", "string"] },
+        userId: { type: ["integer", "string"] },
+        description: { type: "string" }
       },
     };
   }
