@@ -17,3 +17,31 @@
   min-height: 268px;
   object-fit: cover;
 }
+
+
+.logo {
+  width: 100%;
+  max-width: 290px;
+}
+
+.menu-container {
+  background-color:#637081;
+  width: 100%;
+}
+
+.top-bar .button {
+  background-color: transparent;
+}
+
+.menu, .top-bar-left, .top-bar-right, .top-bar ul {
+  background-color: transparent
+}
+
+.top-bar .menu li, .top-bar .menu a {
+  color:white;
+}
+
+.top-bar {
+  max-width: 1400px;
+  margin: auto;
+}
