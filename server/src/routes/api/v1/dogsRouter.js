@@ -1,10 +1,6 @@
 import express from "express";
-<<<<<<< HEAD
-import cleanUserInput from "../../../../services/cleanUserInput.js";
-=======
 import { ValidationError } from "objection";
 import cleanUserInput from "../../../services/cleanUserInput.js";
->>>>>>> 038a56d0ba777cc6a40b49103489494b3accb4fb
 import { Dog } from "../../../models/index.js";
 import { User } from "../../../models/index.js"
 import objection from "objection"

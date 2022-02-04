@@ -17,11 +17,7 @@
     "e2e:run": "yarn workspace dogs-rater-e2e e2e:run"
   },
   "engines": {
-<<<<<<< HEAD
-    "yarn": "^1.22.10",
-=======
     "yarn": "1.22.15",
->>>>>>> 038a56d0ba777cc6a40b49103489494b3accb4fb
     "node": "^14.15"
   }
 }
