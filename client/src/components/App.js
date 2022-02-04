@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
 import DogsList from "./layout/DogsList";
+<<<<<<< HEAD
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
+=======
+import NewDogForm from "./layout/NewDogForm";
+>>>>>>> 038a56d0ba777cc6a40b49103489494b3accb4fb
 import getCurrentUser from "../services/getCurrentUser";
 import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
+import AuthenticatedRoute from "./authentication/AuthenticatedRoute.js";
 import DogShowPage from "./layout/DogShowPage";
 
 const App = (props) => {
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(null);
   const fetchCurrentUser = async () => {
     try {
       const user = await getCurrentUser();
@@ -32,6 +37,11 @@ const App = (props) => {
         <Route exact path="/" component={DogsList} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <AuthenticatedRoute
+          exact path="/dogs"
+          component={NewDogForm}
+          user={currentUser}
+        />
         <Route exact path="/dogs" component={DogsList} />
         {/* <Route exact path="/dogs/:id" render={(props) => <DogShowPage user={currentUser} {...props} />} /> */}
         <Route exact path="/dogs/:id">
