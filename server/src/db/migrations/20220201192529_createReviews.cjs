@@ -10,8 +10,6 @@ exports.up = async (knex) => {
     table.bigIncrements("id");
     table.integer("rating").notNullable();
     table.string("description");
-    table.integer("upvotes");
-    table.integer("downvotes");
     table.bigInteger("dogId").notNullable().index().unsigned().references("dogs.id");
     table.bigInteger("userId").notNullable().index().unsigned().references("users.id");
 
