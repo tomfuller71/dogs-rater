@@ -1,8 +1,23 @@
 import _ from "lodash"
 import translateServerErrors from "./translateServerErrors.js"
-
+/**
+ * A helper class for fetch api:
+ * - static method `.get`
+ * - static method `.post` 
+ */
 class Fetcher {
-
+  /**
+   *
+   * @param {string} route The domain relative url of the post route
+   * @param {object} body The date object to be stringified in the fetch request
+   * @param {object=} options Options for configuring the post request:
+   * - `validationStatus`: the validation errors status code, default 422
+   * - `validationErrorParser`: parsing function used on `validationErrors' - defaults to parse "objection" validation errors
+   * @returns A response object with properties of :
+   * - `ok`: true if successfully inserted
+   * - `data`: the post response body
+   * - `validationErrors`: the parsed json validation errors
+   */
   static async post(route, body, options = {}) {
 
     const validationStatus = options.validationStatus ?? 422
@@ -40,7 +55,13 @@ class Fetcher {
       console.error(`Error in fetch: ${err.message}`)
     }
   }
-
+  /**
+   *
+   * @param {string} route The domain relative url of the post route
+   * @returns A response object with properties of :
+   * - `ok`: true if successfully inserted
+   * - `data`: the post response body
+   */
   static async get(route) {
 
     const response = {

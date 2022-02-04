@@ -1,7 +1,10 @@
 import express from "express";
-import { ValidationError } from "objection";
+import objection from "objection";
+const { ValidationError } = objection;
+
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Dog } from "../../../models/index.js";
+import dogReviewsRouter from "./dogReviewsRouter.js";
 
 const dogsRouter = new express.Router();
 
@@ -18,7 +21,7 @@ dogsRouter.get("/", async (req, res) => {
 dogsRouter.post("/", async (req, res) => {
   const { body } = req;
   const formInput = cleanUserInput(body);
-  formInput.userId = req.user.id
+  formInput.userId = req.user.id;
 
   try {
     const dog = await Dog.query().insertAndFetch(formInput);
@@ -34,11 +37,13 @@ dogsRouter.post("/", async (req, res) => {
 
 dogsRouter.get("/:id", async (req, res) => {
   try {
-    const dog = await Dog.query().findById(req.params.id)
-    return res.status(200).json({ dog })
+    const dog = await Dog.query().findById(req.params.id);
+    return res.status(200).json({ dog });
   } catch (error) {
     return res.status(500).json({ errors: error });
-
   }
-})
+});
+
+dogsRouter.use("/:dogId/reviews", dogReviewsRouter);
+
 export default dogsRouter;

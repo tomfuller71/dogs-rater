@@ -39,7 +39,9 @@ const App = (props) => {
           user={currentUser}
         />
         <Route exact path="/dogs" component={DogsList} />
-        <Route exact path="/dogs/:id" component={DogShowPage} />
+        <Route exact path="/dogs/:id">
+          <DogShowPage user={currentUser} />
+        </Route>
       </Switch>
     </Router>
   );
