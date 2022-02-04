@@ -39,19 +39,28 @@ const DogShowPage = (props) => {
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
   }
+  const postReview = async (review) => {
+    const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews`, review);
+    if (!response.ok) {
+      return setErrors(response.validationErrors);
+    }
+    const updatedReviews = [...dog.reviews, response.data.newReview];
+    setDog({...dog, reviews: updatedReviews});
+  };
 
   return (
     <div className="grid-container">
       <h1>{dog.dogName}</h1>
+          {dogDescription}
       <div className="grid-x grid-margin-x grid-padding-x">
         <div className="cell small-12 large-6 fixed-container">
-          {dogDescription}
           <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
         </div>
         <div className="cell small-12 large-6">{reviewsList}</div>
-      </div>
+          <DogReviewForm postReview={postReview} user={user} />
+        </div>
     </div>
   );
 };
 
-export default DogShowPage;
+export default withRouter(DogShowPage);

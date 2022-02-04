@@ -1,9 +1,10 @@
 import express from "express";
+import { ValidationError } from "objection";
 
 import ReviewsSerializer from "../../../serializers/ReviewSerializer.js";
-import { ValidationError } from "objection";
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Dog } from "../../../models/index.js";
+import dogReviewsRouter from "./dogReviewsRouter.js";
 
 const dogsRouter = new express.Router();
 
@@ -20,7 +21,7 @@ dogsRouter.get("/", async (req, res) => {
 dogsRouter.post("/", async (req, res) => {
   const { body } = req;
   const formInput = cleanUserInput(body);
-  formInput.userId = req.user.id
+  formInput.userId = req.user.id;
 
   try {
     const dog = await Dog.query().insertAndFetch(formInput);
@@ -47,4 +48,7 @@ dogsRouter.get("/:id", async (req, res) => {
     return res.status(500).json({ errors: error });
   }
 });
+
+dogsRouter.use("/:dogId/reviews", dogReviewsRouter);
+
 export default dogsRouter;

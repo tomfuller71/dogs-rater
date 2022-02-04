@@ -37,7 +37,13 @@ class Fetcher {
       console.error(`Error in fetch: ${err.message}`);
     }
   }
-
+  /**
+   *
+   * @param {string} route The domain relative url of the post route
+   * @returns A response object with properties of :
+   * - `ok`: true if successfully inserted
+   * - `data`: the post response body
+   */
   static async get(route) {
     const response = {
       ok: false,
