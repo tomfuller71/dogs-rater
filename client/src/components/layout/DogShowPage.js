@@ -28,7 +28,7 @@ const DogShowPage = (props) => {
   }, []);
 
   const postReview = async (review) => {
-    const response = await Fetcher.post(`/api/v1/dogs/${dogId}`, review);
+    const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews`, review);
     if (!response.ok) {
       return setErrors(response.validationErrors);
     }

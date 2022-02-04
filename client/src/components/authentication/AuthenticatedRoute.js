@@ -3,7 +3,7 @@ import { Redirect, Route } from "react-router";
 
 const AuthenticationCheck = ({ component: Component, user }) => {
   if (user !== null) {
-    return <Component user={user}/>;
+    return <Component user={user} />;
   }
   return <Redirect to="/user-sessions/new" />;
 };
@@ -14,7 +14,7 @@ const AuthenticatedRoute = ({ component, user, ...rest }) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
-      <AuthenticationCheck user={user} component={component}  />
+      <AuthenticationCheck user={user} component={component} />
     </Route>
   );
 };
