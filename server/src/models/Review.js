@@ -10,7 +10,7 @@ class Review extends Model {
       type: "object",
       required: ["rating", "description"],
       properties: {
-        rating: { type: "string" },
+        rating: { type: ["integer", "string"] },
         dogId: { type: ["integer", "string"] },
         userId: { type: ["integer", "string"] },
         description: { type: "string" }

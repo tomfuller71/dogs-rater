@@ -1,7 +1,7 @@
 import express from "express";
-import objection from "objection";
-const { ValidationError } = objection;
+import { ValidationError } from "objection";
 
+import ReviewsSerializer from "../../../serializers/ReviewSerializer.js";
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Dog } from "../../../models/index.js";
 import dogReviewsRouter from "./dogReviewsRouter.js";
@@ -38,6 +38,11 @@ dogsRouter.post("/", async (req, res) => {
 dogsRouter.get("/:id", async (req, res) => {
   try {
     const dog = await Dog.query().findById(req.params.id);
+    const reviews = await dog.$relatedQuery("reviews");
+
+    const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews);
+    dog.reviews = serializedReviews;
+
     return res.status(200).json({ dog });
   } catch (error) {
     return res.status(500).json({ errors: error });
