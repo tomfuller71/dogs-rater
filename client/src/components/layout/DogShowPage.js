@@ -14,21 +14,10 @@ const DogShowPage = (props) => {
   const dogId = props.match.params.id;
 
   const getDog = async () => {
-    try {
-      const response = await fetch(`/api/v1/dogs/${dogId}`);
-      if (!response.ok) {
-        const errorMessage = `${response.status} ${response.statusText}`;
-        const error = new Error(errorMessage);
-        throw error;
-      }
-      const body = await response.json();
-      setDog(body.dog);
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+    const response = await Fetcher.get(`/api/v1/dogs/${dogId}`);
+    if (response.ok) {
+      setDog(response.data.dog);
+    } 
   };
 
   useEffect(() => {
@@ -46,7 +35,7 @@ const DogShowPage = (props) => {
     );
   });
 
-  let dogDescription = "";
+  let dogDescription = "No description provided";
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
   }

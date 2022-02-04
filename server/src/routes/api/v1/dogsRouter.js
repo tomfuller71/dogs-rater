@@ -19,8 +19,8 @@ dogsRouter.get("/:id", async (req, res) => {
   try {
     const dog = await Dog.query().findById(req.params.id);
     const reviews = await dog.$relatedQuery("reviews");
-    const serializedReviews = await ReviewsSerializer.getReviewsDetails(reviews);
-    console.log(serializedReviews);
+
+    const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews);
     dog.reviews = serializedReviews;
 
     return res.status(200).json({ dog });

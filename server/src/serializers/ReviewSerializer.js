@@ -14,7 +14,7 @@ class ReviewsSerializer {
     return serializedReview;
   }
 
-  static async getReviewsDetails(reviews) {
+  static async getReviewCollectionDetails(reviews) {
     return Promise.all(
       reviews.map((review) => {
         return this.getReviewDetail(review);
