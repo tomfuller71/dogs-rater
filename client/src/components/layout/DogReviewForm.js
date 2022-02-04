@@ -23,7 +23,7 @@ const DogReviewForm = (props) => {
     }
 
   return (
-      <div>
+      
           <form onSubmit={handleSubmit}>
               <label>
                   Add new review
@@ -35,7 +35,7 @@ const DogReviewForm = (props) => {
               </label>
               <input className="button" type="submit" value="Submit"/>
           </form>
-      </div>
+      
   )
   
 }

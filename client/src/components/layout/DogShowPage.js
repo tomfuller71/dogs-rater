@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Link from "react-dom";
+import { withRouter } from "react-router";
 
 import DogReviewForm from "./DogReviewForm";
 import Fetcher from "./services/Fetcher.js";
@@ -35,6 +35,7 @@ const DogShowPage = (props) => {
     const updatedReviews = [...reviews, response.data];
     setReviews(updatedReviews);
   };
+
   return (
     <div className="grid-container">
       <h1>{dog.dogName}</h1>
@@ -44,10 +45,9 @@ const DogShowPage = (props) => {
           <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
           <DogReviewForm postReview={postReview} user={user} />
         </div>
-        <div className="cell small-12 large-6"></div>
       </div>
     </div>
   );
 };
 
-export default DogShowPage;
+export default withRouter(DogShowPage);
