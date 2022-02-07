@@ -6,6 +6,7 @@ import Fetcher from "./services/Fetcher.js";
 import DogReviewForm from "./DogReviewForm";
 
 const DogShowPage = (props) => {
+  const { user } = props;
   const [dog, setDog] = useState({
     dogName: "",
     userId: "",
