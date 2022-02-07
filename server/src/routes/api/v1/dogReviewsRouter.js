@@ -17,6 +17,8 @@ dogReviewsRouter.post("/", async (req, res) => {
   try {
     const dog = await Dog.query().findById(dogId);
     const newReview = await dog.$relatedQuery("reviews").insertAndFetch(formInput);
+    const user = await newReview.$relatedQuery("user");
+    newReview.userName = user.name;
     return res.status(201).json({ newReview: newReview });
   } catch (error) {
     if (error instanceof ValidationError) {
