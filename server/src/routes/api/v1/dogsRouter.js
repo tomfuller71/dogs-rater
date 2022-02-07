@@ -5,6 +5,7 @@ import ReviewsSerializer from "../../../serializers/ReviewSerializer.js";
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Dog } from "../../../models/index.js";
 import dogReviewsRouter from "./dogReviewsRouter.js";
+import DogSerializer from "../../../serializers/DogSerializer.js";
 
 const dogsRouter = new express.Router();
 
@@ -13,7 +14,6 @@ dogsRouter.get("/", async (req, res) => {
     const dogs = await Dog.query();
     return res.status(200).json({ dogs: dogs });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ errors: error });
   }
 });
@@ -38,13 +38,11 @@ dogsRouter.post("/", async (req, res) => {
 dogsRouter.get("/:id", async (req, res) => {
   try {
     const dog = await Dog.query().findById(req.params.id);
-    const reviews = await dog.$relatedQuery("reviews");
+    const serializedDog = await DogSerializer.getDogDetail(dog);
 
-    const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews);
-    dog.reviews = serializedReviews;
-
-    return res.status(200).json({ dog });
+    return res.status(200).json({ dog: serializedDog });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });

@@ -22,6 +22,10 @@ const TopBar = ({ user }) => {
     <li key="add-dog">
       <AddDogButton userId={user?.id} />
     </li>,
+    <li key="profile">
+    <Link to="/user-profile">Profile</Link>
+  </li>,
+
     <li key="sign-out">
       <SignOutButton />
     </li>,

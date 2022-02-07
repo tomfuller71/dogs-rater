@@ -28,10 +28,6 @@ const DogsList = (props) => {
     return (
         <DogTile
           key={dog.id}
-          id={dog.id}
-          rating={dog.rating}
-          name={dog.dogName}
-          pictureUrl={dog.pictureUrl}
           dog={dog}
         />
     );

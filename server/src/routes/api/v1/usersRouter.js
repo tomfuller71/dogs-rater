@@ -2,10 +2,23 @@ import express from "express";
 import passport from "passport";
 import { User } from "../../../models/index.js";
 import objection from "objection";
+import UserSerializer from "../../../serializers/UserSerializer.js";
 
 const { ValidationError } = objection;
 
 const usersRouter = new express.Router();
+
+usersRouter.get("/", async (req, res) => {
+  const id = req.user.id
+  try {
+    const user = await User.query().findById(id)
+    const serializedUser = await UserSerializer.getUserDetail(user)
+    res.status(200).json({ user: serializedUser })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({errors: error})
+  }
+})
 
 usersRouter.post("/", async (req, res) => {
   const { email, password, passwordConfirmation, name } = req.body;
