@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AddDogButton = () => {
   return (
-    <Link className="button" to="/dogs/new">
+    <Link className="button" to="/dogs/">
       Add your dog
     </Link>
   );

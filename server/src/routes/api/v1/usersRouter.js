@@ -1,8 +1,11 @@
 import express from "express";
 import passport from "passport";
 import { User } from "../../../models/index.js";
+import objection from "objection";
 
-const usersRouter = new express.Router()
+const { ValidationError } = objection;
+
+const usersRouter = new express.Router();
 
 usersRouter.post("/", async (req, res) => {
   const { email, password, passwordConfirmation, name } = req.body;

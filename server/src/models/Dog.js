@@ -8,12 +8,12 @@ class Dog extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["dogName", "pictureUrl", "userId"],
+      required: ["dogName", "userId"],
       properties: {
         dogName: { type: "string", minLength: 1, maxLength: 30 },
         pictureUrl: { type: "string" },
         userId: { type: ["integer", "string"] },
-        description: { type: "string" }
+        description: { type: "string" },
       },
     };
   }

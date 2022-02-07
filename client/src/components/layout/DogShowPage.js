@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import Link from "react-dom";
 import ReviewTile from "./ReviewTile";
 import Fetcher from "./services/Fetcher.js";
+import { withRouter } from "react-router-dom";
+import DogReviewForm from "./DogReviewForm";
 
 const DogShowPage = (props) => {
+  const { user } = props;
   const [dog, setDog] = useState({
     dogName: "",
     userId: "",
@@ -17,7 +20,7 @@ const DogShowPage = (props) => {
     const response = await Fetcher.get(`/api/v1/dogs/${dogId}`);
     if (response.ok) {
       setDog(response.data.dog);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -45,20 +48,21 @@ const DogShowPage = (props) => {
       return setErrors(response.validationErrors);
     }
     const updatedReviews = [...dog.reviews, response.data.newReview];
-    setDog({...dog, reviews: updatedReviews});
+    console.log(response.data.newReview);
+    setDog({ ...dog, reviews: updatedReviews });
   };
 
   return (
     <div className="grid-container">
       <h1>{dog.dogName}</h1>
-          {dogDescription}
+      {dogDescription}
       <div className="grid-x grid-margin-x grid-padding-x">
         <div className="cell small-12 large-6 fixed-container">
           <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
         </div>
         <div className="cell small-12 large-6">{reviewsList}</div>
-          <DogReviewForm postReview={postReview} user={user} />
-        </div>
+        <DogReviewForm postReview={postReview} user={user} />
+      </div>
     </div>
   );
 };
