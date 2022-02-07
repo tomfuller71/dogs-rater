@@ -1,0 +1,70 @@
+.logo {
+  width: 100%;
+  max-width: 290px;
+}
+
+.menu-container {
+  background-color: var(--slate);
+  width: 100%;
+  vertical-align: middle;
+  padding: 15px 30px;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+.menu,
+.header-left,
+.header-right,
+.header ul {
+  background-color: transparent;
+}
+
+ul.menu {
+  flex-wrap: nowrap;
+  justify-content: end;
+  column-gap: 30px;
+}
+.header .menu li,
+.header .menu a {
+  color: white;
+  font-size: 1.25rem;
+  padding: 0px;
+}
+
+.header .menu a:hover {
+  color: var(--yellow);
+}
+
+.header .menu a:active {
+  color: var(--orange);
+}
+
+.header {
+  max-width: 1400px;
+  margin: auto;
+  background-color: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  flex-basis: 60%;
+}
+
+.header-right {
+  flex-basis: 40%;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    width: 80%;
+  }
+  .header .menu li,
+  .header .menu a {
+    font-size: 1rem;
+  }
+}

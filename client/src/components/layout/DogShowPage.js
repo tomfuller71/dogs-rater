@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "react-dom";
 import ReviewTile from "./ReviewTile";
-import Fetcher from "./services/Fetcher.js";
 import { withRouter } from "react-router-dom";
+import Fetcher from "./services/Fetcher.js";
 import DogReviewForm from "./DogReviewForm";
 
 const DogShowPage = (props) => {
@@ -48,7 +48,6 @@ const DogShowPage = (props) => {
       return setErrors(response.validationErrors);
     }
     const updatedReviews = [...dog.reviews, response.data.newReview];
-    console.log(response.data.newReview);
     setDog({ ...dog, reviews: updatedReviews });
   };
 

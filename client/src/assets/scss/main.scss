@@ -1,5 +1,6 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
+@import "./top-bar.scss";
 @include foundation-everything;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap");
 *,
@@ -11,38 +12,26 @@
 :root {
   -moz-tab-size: 4;
   tab-size: 4;
-}
-
-.dog.cell img {
-  min-height: 268px;
-  object-fit: cover;
-}
-
-h1 {
-  margin: 40px 0.9375rem 20px;
+  --yellow: #ff9505;
+  --orange: #ec4e20;
+  --slate: #637081;
 }
 
 body,
-div,
-ul,
-p,
+html,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p,
+div,
+span {
   font-family: "Outfit", "Avenir Next", Avenir, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 600;
-}
-
-h5,
-h6 {
-  font-weight: 500;
+.dog.cell img {
+  min-height: 268px;
+  object-fit: cover;
 }
