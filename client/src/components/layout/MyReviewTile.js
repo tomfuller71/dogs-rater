@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const MyReviewTile = ({ review }) => {
-  const { rating, description, dogName, dogId } = review
+const MyReviewTile = (props) => {
+  const { review, deleteReview, editReview } = props;
+  const { rating, description, dogName, dogId, id } = review;
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editedReview, setEditedReview] = useState({ description, rating });
+
+  const deleteHandler = (event) => {
+    event.preventDefault();
+    deleteReview(id);
+  };
+
+  const editHandler = (event) => {
+    event.preventDefault();
+    setShowEditForm(!showEditForm);
+  };
+
+  const handleInputChange = (event) => {
+    setEditedReview({
+      ...editedReview,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    editReview(editedReview, id);
+    setShowEditForm(false);
+  };
+
+  const cancelHandler = (event) => {
+    setShowEditForm(false);
+  };
+
   return (
     <div className="grid-x callout">
       <div className="cell small-9">
@@ -12,6 +43,32 @@ const MyReviewTile = ({ review }) => {
         <p>{description}</p>
       </div>
       <div className="cell small-3 dog-rating">{rating} / 10</div>
+      <button className="button edit-button" onClick={editHandler}>Edit</button>
+      <button className="button delete-button" onClick={deleteHandler}>Delete</button>
+      {showEditForm && (
+        <form onSubmit={handleSubmit}>
+          <label>
+            Edit review
+            <input
+              type="text"
+              name="description"
+              onChange={handleInputChange}
+              value={editedReview.description}
+            />
+          </label>
+          <label>
+            Rating
+            <input
+              type="number"
+              name="rating"
+              onChange={handleInputChange}
+              value={editedReview.rating}
+            />
+          </label>
+          <input className="button" type="submit" value="Submit" />
+          <button onClick={cancelHandler}>cancel</button>
+        </form>
+      )}
     </div>
   );
 };
