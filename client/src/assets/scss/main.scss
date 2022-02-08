@@ -35,3 +35,9 @@ span {
   min-height: 268px;
   object-fit: cover;
 }
+
+.dog-tile-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

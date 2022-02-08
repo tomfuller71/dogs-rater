@@ -9,9 +9,9 @@ const DogTile = ({ dog }) => {
       <Link to={`/dogs/${id}`}>
       <img src={pictureUrl} alt="Dog image" className="dog-image" />
       <div className="card-section orange">
-        <div className="cell small-6">
-          <h4>{dogName}</h4>
-          {rating}
+        <div className="cell small-6 dog-tile-bottom">
+            <h4>{dogName}</h4>
+            <h4> {rating} / 10</h4>
         </div>
       </div>
       </Link>
