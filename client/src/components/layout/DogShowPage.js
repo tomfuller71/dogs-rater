@@ -7,6 +7,7 @@ import DogReviewForm from "./DogReviewForm";
 
 const DogShowPage = (props) => {
   const { user } = props;
+
   const [dog, setDog] = useState({
     dogName: "",
     userId: "",
@@ -14,6 +15,7 @@ const DogShowPage = (props) => {
     pictureUrl: "",
     reviews: [],
   });
+
   const dogId = props.match.params.id;
 
   const getDog = async () => {
