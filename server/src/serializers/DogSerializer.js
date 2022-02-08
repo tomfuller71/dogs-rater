@@ -15,6 +15,7 @@ class DogSerializer {
     .getReviewCollectionDetails(reviews);
 
     serializedDog.reviews = serializedReviews;
+    serializedDog.rating = this.averageRating(reviews)
 
     return serializedDog;
   }
@@ -25,6 +26,15 @@ class DogSerializer {
         return this.getDogDetail(dog);
       })
     );
+  }
+
+  static averageRating(reviews) {
+    let total = 0
+    reviews.forEach(review => {
+      total += review.rating
+    })
+
+    return (total / reviews.length).toFixed(1)
   }
 }
 

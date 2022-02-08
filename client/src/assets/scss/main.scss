@@ -1,5 +1,6 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
+@import "./top-bar.scss";
 @include foundation-everything;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap");
 *,
@@ -13,6 +14,7 @@
   tab-size: 4;
   --yellow: #ff9505;
   --orange: #ec4e20;
+  --slate: #637081;
 }
 
 body,
@@ -34,79 +36,10 @@ span {
   object-fit: cover;
 }
 
-.logo {
-  width: 100%;
-  max-width: 290px;
-}
-
-.menu-container {
-  background-color: #637081;
-  width: 100%;
-  vertical-align: middle;
-  padding: 15px 30px;
-  position: sticky;
-  top: 0px;
-  z-index: 100;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
-}
-
-.header .button {
-  background-color: transparent;
-}
-
-.menu,
-.header-left,
-.header-right,
-.header ul {
-  background-color: transparent;
-}
-
-ul.menu {
-  flex-wrap: nowrap;
-  justify-content: end;
-  column-gap: 30px;
-}
-.header .menu li,
-.header .menu a {
-  color: white;
-  font-size: 1.25rem;
-  padding: 0px;
-}
-
-.header .menu a:hover {
-  color: var(--yellow);
-}
-
-.header .menu a:active {
-  color: var(--orange);
-}
-
-.header {
-  max-width: 1400px;
-  margin: auto;
-  background-color: transparent;
+.dog-tile-bottom {
   display: flex;
-  flex-wrap: nowrap;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-}
-
-.header-left {
-  flex-basis: 60%;
-}
-
-.header-right {
-  flex-basis: 40%;
-}
-
-@media (max-width: 600px) {
-  .logo {
-    width: 80%;
-  }
-  .header .menu li,
-  .header .menu a {
-    font-size: 1rem;
-  }
 }
 
 .edit-button {

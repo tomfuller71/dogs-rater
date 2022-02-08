@@ -12,7 +12,8 @@ const dogsRouter = new express.Router();
 dogsRouter.get("/", async (req, res) => {
   try {
     const dogs = await Dog.query();
-    return res.status(200).json({ dogs: dogs });
+    const serializedDogs = await DogSerializer.getDogCollectionDetails(dogs)
+    return res.status(200).json({ dogs: serializedDogs });
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
