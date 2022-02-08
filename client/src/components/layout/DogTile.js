@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DogTile = ({ dog }) => {
-  const { id, pictureUrl, dogName} = dog
+  const { id, pictureUrl, dogName, rating} = dog
+  
   return (
     <div className="dog cell card small-6 medium-4 large-3">
       <Link to={`/dogs/${id}`}>
@@ -10,6 +11,7 @@ const DogTile = ({ dog }) => {
       <div className="card-section orange">
         <div className="cell small-6">
           <h4>{dogName}</h4>
+          {rating}
         </div>
       </div>
       </Link>

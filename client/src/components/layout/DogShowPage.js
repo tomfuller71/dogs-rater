@@ -60,6 +60,7 @@ const DogShowPage = (props) => {
       <div className="grid-x grid-margin-x grid-padding-x">
         <div className="cell small-12 large-6 fixed-container">
           <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
+          <p>Rating: {dog.rating}</p>
         </div>
         <div className="cell small-12 large-6">{reviewsList}</div>
         <DogReviewForm postReview={postReview} user={user} />
