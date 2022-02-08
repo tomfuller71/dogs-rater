@@ -23,8 +23,8 @@ const TopBar = ({ user }) => {
       <AddDogButton userId={user?.id} />
     </li>,
     <li key="profile">
-    <Link to="/user-profile">Profile</Link>
-  </li>,
+      <Link to="/user-profile">Profile</Link>
+    </li>,
 
     <li key="sign-out">
       <SignOutButton />
