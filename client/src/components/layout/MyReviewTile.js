@@ -35,7 +35,7 @@ const MyReviewTile = (props) => {
   };
 
   return (
-    <div className="grid-x callout">
+    <div className="grid-x callout review-tile">
       <div className="cell small-9">
         <Link to={`/dogs/${dogId}`}>
           <h3>{dogName}</h3>
@@ -43,8 +43,8 @@ const MyReviewTile = (props) => {
         <p>{description}</p>
       </div>
       <div className="cell small-3 dog-rating">{rating} / 10</div>
-      <button className="button edit-button" onClick={editHandler}>Edit</button>
-      <button className="button delete-button" onClick={deleteHandler}>Delete</button>
+      <a onClick={editHandler}>Edit</a>
+      <a onClick={deleteHandler}>Delete</a>
       {showEditForm && (
         <form onSubmit={handleSubmit}>
           <label>

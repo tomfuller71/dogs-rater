@@ -42,10 +42,12 @@ span {
   justify-content: space-between;
 }
 
-.edit-button {
-  margin-right: 20px;
+.review-tile a {
+  display: inline-block;
+  color: var(--slate);
+  margin-right: 15px;
 }
 
-.callout > :last-child {
-  margin-bottom: inherit
+.review-tile a:hover {
+  border-bottom: 1px solid var(--slate);
 }
