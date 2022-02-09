@@ -45,6 +45,18 @@ class Review extends Model {
           from: "reviews.id",
           to: "votes.reviewId"
         }
+      },
+      voters: {
+        relation: Model.ManyToManyRelation,
+        modelClass: User,
+        join: {
+          from: "reviews.id",
+          through: {
+            from: "votes.reviewId",
+            to: "votes.userId"
+          },
+          to: "users.id"
+        }
       }
     }
   }

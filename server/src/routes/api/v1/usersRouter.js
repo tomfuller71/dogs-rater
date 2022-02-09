@@ -3,6 +3,7 @@ import passport from "passport"
 import { User } from "../../../models/index.js"
 import objection from "objection"
 import UserSerializer from "../../../serializers/UserSerializer.js"
+import userReviewsRouter from "./userReviewsRouter.js"
 
 const { ValidationError } = objection
 
@@ -32,12 +33,13 @@ usersRouter.post("/", async (req, res) => {
       return res.status(201).json({ user: persistedUser })
     })
   } catch (error) {
-    console.log(error)
     if (error instanceof ValidationError) {
       return res.status(422).json({ errors: error.data })
     }
     return res.status(500).json({ errors: error })
   }
 })
+
+usersRouter.use("/:userId/:reviewId", userReviewsRouter)
 
 export default usersRouter

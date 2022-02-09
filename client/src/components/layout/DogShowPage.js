@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "react-dom";
 import ReviewTile from "./ReviewTile";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import Fetcher from "./services/Fetcher.js";
 import DogReviewForm from "./DogReviewForm";
 
@@ -16,6 +16,8 @@ const DogShowPage = (props) => {
     reviews: [],
   });
 
+  const [shouldRedirect, setShouldRedirect] = useState(false)
+
   const dogId = props.match.params.id;
 
   const getDog = async () => {
@@ -29,14 +31,73 @@ const DogShowPage = (props) => {
     getDog();
   }, []);
 
+  const updateVotes = (userVote, reviewId) => {
+    const index = dog.reviews.findIndex(review => review.id === reviewId)
+    const currentReview = dog.reviews[index]
+    const voteType = `${userVote}Votes`
+    const newReview = {
+      ...currentReview,
+       [voteType]: (currentReview[voteType] += 1)
+    }
+
+    const updatedReviews = [...dog.reviews]
+    updatedReviews.splice(index, 1, newReview)
+
+    return setDog({...dog, reviews: updatedReviews})
+  }
+
+  const updateVoteStatus = (userVote, reviewId) => {
+    const index = dog.reviews.findIndex(review => review.id === reviewId)
+    const currentReview = dog.reviews[index]
+    const propName = "didVote"
+    const newReview = {
+      ...currentReview,
+       [propName]: true
+    }
+
+    const updatedReviews = [...dog.reviews]
+    updatedReviews.splice(index, 1, newReview)
+
+    return setDog({...dog, reviews: updatedReviews})
+  }
+
+  const logVote = async (userVote, reviewId) => {
+    const response = await Fetcher.post(
+      `/api/v1/dogs/${dogId}/reviews/votes`,
+       {userVote, reviewId}
+    )
+
+    if (!response.ok) {
+      return setErrors(response.validationErrors);
+    }
+
+    switch (response.data.message) {
+      case "Log in required":
+        return setShouldRedirect(true)
+      case "Already voted": 
+        return updateVoteStatus(userVote, reviewId)
+      case "Vote logged":
+        return updateVotes(userVote, reviewId)
+      default:
+        break;
+    }
+  }
+
+  if(shouldRedirect){
+    return <Redirect push to="/user-sessions/new" />;
+  }
+
   const reviewsList = dog.reviews.map((review) => {
     return (
       <ReviewTile
         key={review.id}
+        logVote={logVote}
         {...review}
       />
     );
   });
+
+  
 
   let dogDescription = "No description provided";
   if (dog.description) {
