@@ -41,3 +41,13 @@ span {
   flex-direction: row;
   justify-content: space-between;
 }
+
+.review-tile a {
+  display: inline-block;
+  color: var(--slate);
+  margin-right: 15px;
+}
+
+.review-tile a:hover {
+  border-bottom: 1px solid var(--slate);
+}

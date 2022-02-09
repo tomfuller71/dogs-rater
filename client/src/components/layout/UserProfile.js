@@ -26,12 +26,60 @@ const UserProfile = (props) => {
     getUserData();
   }, []);
 
+  const deleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(`/api/v1/users/${userId}/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const errorMessage = `${response.status} ${response.statusText}`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const body = await response.json();
+      setUser(body.data);
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+    }
+  };
+
+  const editReview = async (editedReview, id) => {
+    try {
+      const response = await fetch(`/api/v1/users/${userId}/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedReview),
+      });
+      if (!response.ok) {
+        const errorMessage = `${response.status} ${response.statusText}`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const body = await response.json();
+      setUser(body.data);
+    } catch (error) {
+      console.log(`Error in fetch: ${error.message}`);
+    }
+  };
+
   const dogs = user.dogs.map((dog) => {
     return <DogTile key={dog.id} dog={dog} />;
   });
 
   const reviews = user.reviews.map((review) => {
-    return <MyReviewTile key={review.id} review={review} />;
+    return (
+      <MyReviewTile
+        key={review.id}
+        review={review}
+        deleteReview={deleteReview}
+        editReview={editReview}
+      />
+    );
   });
 
   return (
