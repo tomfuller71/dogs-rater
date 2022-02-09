@@ -33,9 +33,7 @@ const DogShowPage = (props) => {
     return (
       <ReviewTile
         key={review.id}
-        userName={review.userName}
-        description={review.description}
-        rating={review.rating}
+        {...review}
       />
     );
   });

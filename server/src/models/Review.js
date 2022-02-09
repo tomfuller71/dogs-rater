@@ -1,8 +1,8 @@
-const Model = require("./Model");
+const Model = require("./Model")
 
 class Review extends Model {
   static get tableName() {
-    return "reviews";
+    return "reviews"
   }
 
   static get jsonSchema() {
@@ -15,12 +15,11 @@ class Review extends Model {
         userId: { type: ["integer", "string"] },
         description: { type: "string" }
       },
-    };
+    }
   }
 
   static get relationMappings() {
-    const Dog = require("./Dog");
-    const User = require("./User");
+    const { Dog, User, Vote}  = require("./index.js");
 
     return {
       dog: {
@@ -39,7 +38,15 @@ class Review extends Model {
           to: "users.id",
         },
       },
-    };
+      votes: {
+        relation: Model.HasManyRelation,
+        modelClass: Vote,
+        join: {
+          from: "reviews.id",
+          to: "votes.reviewId"
+        }
+      }
+    }
   }
 }
 
