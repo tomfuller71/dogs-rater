@@ -39,7 +39,8 @@ const UserProfile = (props) => {
         const error = new Error(errorMessage);
         throw error;
       }
-      getUserData();
+      const body = await response.json();
+      setUser(body.data);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
@@ -59,7 +60,8 @@ const UserProfile = (props) => {
         const error = new Error(errorMessage);
         throw error;
       }
-      getUserData();
+      const body = await response.json();
+      setUser(body.data);
     } catch (error) {
       console.log(`Error in fetch: ${error.message}`);
     }

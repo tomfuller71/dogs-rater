@@ -11,7 +11,9 @@ const DogTile = ({ dog }) => {
       <div className="card-section orange">
         <div className="cell small-6 dog-tile-bottom">
             <h4>{dogName}</h4>
-            <h4> {rating} / 10</h4>
+            {rating && (
+              <h4> {rating} / 10</h4>
+            )}
         </div>
       </div>
       </Link>

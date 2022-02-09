@@ -1,28 +1,36 @@
 import express from "express"
 import Review from "../../../models/Review.js"
+import User from "../../../models/User.js"
 
 import cleanUserInput from "../../../services/cleanUserInput.js"
+import UserSerializer from "../../../serializers/UserSerializer.js"
 
 const userReviewsRouter = new express.Router({ mergeParams: true })
 
 userReviewsRouter.delete("/", async (req, res) => {
-  const { reviewId } = req.params
+  const { reviewId, userId } = req.params
 
   try {
     await Review.query().deleteById(reviewId)
-    return res.status(201).json({ message: "Delete successful" })
+    const user = await User.query().findById(userId)
+    const serializedUser = await UserSerializer.getUserDetail(user)
+
+    return res.status(201).json({ data: serializedUser })
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
 })
 
 userReviewsRouter.patch("/", async (req, res) => {
-  const { reviewId } = req.params
+  const { reviewId, userId } = req.params
   const { body } = req
   const formInput = cleanUserInput(body)
   try {
     const updatedReview = await Review.query().patchAndFetchById(reviewId, formInput)
-    return res.status(201).json({ review: updatedReview })
+    const user = await User.query().findById(userId)
+    const serializedUser = await UserSerializer.getUserDetail(user)
+
+    return res.status(201).json({ data: serializedUser })
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
