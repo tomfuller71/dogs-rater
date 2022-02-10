@@ -1,25 +1,61 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import translateServerErrors from "./services/translateServerErrors.js";
 
-import Fetcher from "./services/Fetcher.js";
-import ErrorList from "./ErrorList.js"
+import ErrorList from "./ErrorList.js";
+import Dropzone from "react-dropzone";
 
 const NewDogForm = ({ user }) => {
   const defaultFormValue = {
     dogName: "",
-    description: ""
+    description: "",
+    image: {},
   };
 
   const [newDog, setNewDog] = useState(defaultFormValue);
   const [errors, setErrors] = useState([]);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const getNewDog = async () => {
-    const response = await Fetcher.post(`/api/v1/dogs`, newDog);
-    if (response.ok) {
-      return setShouldRedirect(true);
+  const handleImageUpload = (acceptedImage) => {
+    setNewDog({
+      ...newDog,
+      image: acceptedImage[0],
+    });
+  };
+
+  const getNewDog = async (event) => {
+    const userId = user.id;
+    const newDogBody = new FormData();
+    newDogBody.append("dogName", newDog.dogName);
+    newDogBody.append("description", newDog.description);
+    newDogBody.append("image", newDog.image);
+    newDogBody.append("userId", userId);
+
+    try {
+      const response = await fetch("/api/v1/dogs", {
+        method: "POST",
+        headers: {
+          Accept: "image/jpeg",
+        },
+        body: newDogBody,
+      });
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json();
+          const newErrors = translateServerErrors(body.errors);
+          return setErrors(newErrors);
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`;
+          const error = new Error(errorMessage);
+
+          throw error;
+        }
+      }
+      const body = await response.json();
+      setShouldRedirect(true);
+    } catch (error) {
+      console.error(`Error in addDog Fetch: ${error.message}`);
     }
-    setErrors(response.validationErrors);
   };
 
   const handleInputChange = (event) => {
@@ -44,46 +80,41 @@ const NewDogForm = ({ user }) => {
   }
 
   return (
-    <div className="grid-x grid-margin-x">
-      <div className="cell small-10 medium-8">
-        <h1>Add a New Dog</h1>
-        <ErrorList errors={errors} />
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="dogName"
-              value={newDog.dogName}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Description (Optional):
-            <input
-              type="text"
-              name="description"
-              onChange={handleInputChange}
-              value={newDog.description}
-            />
-          </label>
-          <div className="button-group">
-            <input
-              className="button"
-              type="submit"
-              value="Submit"
-            />
-            <input
-              className="button"
-              type="button"
-              value="Clear Form"
-              onClick={clearForm}
-            />
-          </div>
-        </form>
-      </div>
+    <div className="grid-container">
+      <h1>Add a New Dog</h1>
+
+      <ErrorList errors={errors} />
+      <form onSubmit={handleSubmit}>
+        <Dropzone onDrop={handleImageUpload}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Upload Your Dog - drag 'n' drop or click to upload</p>
+              </div>
+            </section>
+          )}
+        </Dropzone>
+        <label>
+          Name:
+          <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
+        </label>
+        <label>
+          Description (Optional):
+          <input
+            type="text"
+            name="description"
+            onChange={handleInputChange}
+            value={newDog.description}
+          />
+        </label>
+        <div className="button-group">
+          <input className="button" type="submit" value="Submit" />
+          <input className="button" type="button" value="Clear Form" onClick={clearForm} />
+        </div>
+      </form>
     </div>
   );
 };
 
-export default NewDogForm
+export default NewDogForm;

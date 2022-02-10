@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DogTile = ({ dog }) => {
-  const { id, pictureUrl, dogName, rating, reviews } = dog;
+  const { id, image, dogName, rating, reviews } = dog;
 
   let reviewCount = "reviews";
   if (reviews.length === 1) {
@@ -15,7 +15,7 @@ const DogTile = ({ dog }) => {
         <div
           className="card-top"
           style={{
-            backgroundImage: `url(${pictureUrl} )`,
+            backgroundImage: `url(${image} )`,
           }}
         >
           {rating && <h4 className="rating"> {rating} / 10</h4>}

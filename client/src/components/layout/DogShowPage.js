@@ -71,7 +71,7 @@ const DogShowPage = (props) => {
         <div
           className="cell small-12 large-5 dog-pic"
           style={{
-            backgroundImage: `url(${dog.pictureUrl} )`,
+            backgroundImage: `url(${dog.image} )`,
           }}
         >
           {reviewFormVisibility && <DogReviewForm postReview={postReview} user={user} />}

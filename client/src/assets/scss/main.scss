@@ -2,6 +2,7 @@
 @import "~foundation-sites/scss/foundation";
 @import "./top-bar.scss";
 @import "./show-page.scss";
+// @import "./new-dog-form.scss";
 @include foundation-everything;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap");
 *,
@@ -26,6 +27,7 @@
   --medium-gray: #ececec;
   --purple: #5f1a37;
   --pink: #830a48;
+  --silver: #b5baba;
 }
 
 body {
