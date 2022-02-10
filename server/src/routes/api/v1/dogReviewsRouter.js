@@ -29,27 +29,18 @@ dogReviewsRouter.post("/", async (req, res) => {
   }
 })
 
-
 dogReviewsRouter.post("/votes", async (req, res) => {
   const { userVote, reviewId } = req.body
-  if(!req.user) {
-    return res.status(201).json({ message: "Log in required"})
+
+  if (!req.user) {
+    return res.status(201).json({ message: "Log in required" })
   }
   const userId = req.user.id
 
   try {
     const votedReview = await Review.query().findById(reviewId)
-    const voters = await votedReview.$relatedQuery("voters")
-    const alreadyVoted = voters.some((voter) => voter.id === userId)
-
-    if(!alreadyVoted){
-      await votedReview.$relatedQuery("votes").insert({ userVote, userId })
-      return res.status(201).json({ message: "Vote logged" })
-    } else {
-      const deleteId = await votedReview.$relatedQuery("votes").find((vote) => vote.userId === userId).id
-      await Vote.query().deleteById(deleteId)
-      return res.status(201).json({ message: "Vote removed"})
-    }
+    await votedReview.$relatedQuery("votes").insert({ userVote, userId })
+    return res.status(201).json({ message: "Vote logged" })
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
@@ -58,12 +49,11 @@ dogReviewsRouter.post("/votes", async (req, res) => {
 dogReviewsRouter.delete("/votes/:voteId", async (req, res) => {
   const { voteId } = req.body
 
-  if(!req.user) return res.status(201).json({message: "Log in required"})
+  if (!req.user) return res.status(201).json({ message: "Log in required" })
 
   try {
     await Vote.query().deleteById(voteId)
-    return res.status(201).json({ message: "Vote removed"})
-
+    return res.status(201).json({ message: "Vote removed" })
   } catch (error) {
     return res.status(500).json({ errors: error })
   }

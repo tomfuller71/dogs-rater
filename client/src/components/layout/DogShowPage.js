@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Link from "react-dom";
+
 import ReviewTile from "./ReviewTile";
 import { withRouter, Redirect } from "react-router-dom";
 import Fetcher from "./services/Fetcher.js";
@@ -31,60 +31,6 @@ const DogShowPage = (props) => {
     getDog();
   }, []);
 
-  const updateVotes = (userVote, review, deleting) => {
-    const index = dog.reviews.findIndex((element) => review.id === element.id);
-    const voteType = `${userVote}Votes`;
-    let newReview = {
-      ...review,
-      userVote,
-      [voteType]: (review[voteType] += 1),
-    };
-
-    if (deleting) {
-      const previousVoteType = `${review.userVote}Votes`
-      newReview[previousVoteType] -= 1
-    }
-
-    const updatedReviews = [...dog.reviews];
-    updatedReviews.splice(index, 1, newReview);
-
-    return setDog({ ...dog, reviews: updatedReviews });
-  };
-
-  // const updateVoteStatus = (userVote, reviewId) => {
-  //   const index = dog.reviews.findIndex(review => review.id === reviewId)
-  //   const currentReview = dog.reviews[index]
-  //   const updatedReviews = [...dog.reviews]
-  //   updatedReviews.splice(index, 1, newReview)
-
-  //   return setDog({...dog, reviews: updatedReviews})
-  // }
-
-  // const unVote = async (voteId) => {
-  //
-  // }
-
-  /*
-  If user not previously voted and click up 
-  return = { userVote: up, upvotes: +1 }
-
-  If user not previously voted and click up 
-  return = { userVote: up, upvotes: +1 }
-
-  User already voted up - then click on up
-  return = {userVote: null, upVotes: -1}
-
-  User already voted up - then they click down
-  return = { userVote: down, upvotes: -1, downVotes: +1}
-
-  User already voted down - then click on down
-  return = {userVote: null, downVotes: -1}
-
-  User already voted down - then they click up
-  return = { userVote: up, upvotes: +1, downVotes: -1}
-  
-*/
-
   const deleteVote = async (voteId) => {
     try {
       const response = await fetch(`/api/v1/dogs/${dogId}/reviews/votes/${voteId}`, {
@@ -99,9 +45,9 @@ const DogShowPage = (props) => {
     }
   };
 
-  const postNewVote = async (newVote, review) => {
+  const postNewVote = async (userVote, review) => {
     const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews/votes`, {
-      newVote,
+      userVote,
       reviewId: review.id,
     });
 
@@ -111,54 +57,84 @@ const DogShowPage = (props) => {
     return true
   }
 
-  const logVote = async (newVote, review) => {
+  const updateReview = async (review, update) => {
+    const index = dog.reviews.findIndex((element) => review.id === element.id)
+    let newReview = {
+      ...review,
+      userVote: update.newUserVote
+    }
+    
+    if (update.postNewVote) {
+      const newVoteType = `${update.newUserVote}Votes`
+      newReview[newVoteType] += 1
+      await postNewVote(update.newUserVote, review)
+    }
+
+    if (update.removeExistingVote) {
+      const previousVoteType = `${review.userVote}Votes`
+      newReview[previousVoteType] -= 1
+      await deleteVote(review.id);
+    }
+
+    if (update.userVote === null) {
+      delete newReview.userVote
+    }
+
+    const updatedReviews = [...dog.reviews];
+    updatedReviews.splice(index, 1, newReview);
+
+    return setDog({ ...dog, reviews: updatedReviews });
+  };
+
+  const makeNewVote = async (newVote, review) => {
     if (!user) return setShouldRedirect(true);
 
     const existingVote = review?.userVote
-    let post = false, remove = false
-    if (!existingVote) {
-      post = true
-    } else if (newVote !== existingVote) {
-      post = true
-      remove = true
-    } else {
-      remove = true
+
+    let update = { 
+      postNewVote: false,
+      removeExistingVote: false,
+      newUserVote: newVote
     }
 
-    if(post && remove){
-      await deleteVote(review.id)
-      await postNewVote(newVote, review)
-    } else if(post){
-      await postNewVote(newVote, review)
+    if (!existingVote) {
+      update.postNewVote = true
+    } else if (newVote !== existingVote) {
+      update.postNewVote = true
+      update.removeExistingVote = true
     } else {
-      await deleteVote(review.id)
+      update.removeExistingVote = true
+      update.newUserVote = null
     }
-    // await deleteVote(review.id)
-    // await postNewVote(newVote, review)
-    // updateVotes(newVote, review, false)
-    // updateVotes(newVote, review, true)
-};
+
+    updateReview(review, update)
+  };
+
+  const postReview = async (review) => {
+    const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews`, review)
+
+    if (!response.ok) {
+      return setErrors(response.validationErrors);
+    }
+
+    const updatedReviews = [...dog.reviews, response.data.newReview];
+    setDog({ ...dog, reviews: updatedReviews });
+  }
 
   if (shouldRedirect) {
     return <Redirect push to="/user-sessions/new" />;
   }
 
   const reviewsList = dog.reviews.map((review) => {
-    return <ReviewTile key={review.id} logVote={logVote} review={review} />;
-  });
+    return (
+      <ReviewTile key={review.id} makeNewVote={makeNewVote} review={review} />
+    )
+  })
 
   let dogDescription = "No description provided";
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
   }
-  const postReview = async (review) => {
-    const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews`, review);
-    if (!response.ok) {
-      return setErrors(response.validationErrors);
-    }
-    const updatedReviews = [...dog.reviews, response.data.newReview];
-    setDog({ ...dog, reviews: updatedReviews });
-  };
 
   return (
     <div className="grid-container">
