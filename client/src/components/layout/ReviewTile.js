@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
-const ReviewTile = ({ review, makeNewVote }) => {
+const ReviewTile = ({ review, makeNewVote, user }) => {
   const { rating, description, upVotes, downVotes, userVote, reviewId, userId } = review;
 
   const linkVisibility = user?.id === userId;
@@ -89,7 +89,7 @@ const ReviewTile = ({ review, makeNewVote }) => {
   return (
     <div className="grid-x review-tile">
       <div className="cell small-10">
-        <h5>{reviewerName}</h5>
+        <h5>{review.userName}</h5>
         <p>{description}</p>
         {linkVisibility && (
           <>
