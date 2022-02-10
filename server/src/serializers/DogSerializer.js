@@ -3,7 +3,7 @@ import ReviewsSerializer from "./ReviewSerializer.js"
 
 class DogSerializer {
   static async getDogDetail(dog, userId) {
-    const allowedAttributes = ["id", "dogName", "pictureUrl", "description"]
+    const allowedAttributes = ["id", "dogName", "description", "image"]
 
     let serializedDog = {}
     for (const attribute of allowedAttributes) {
@@ -12,7 +12,6 @@ class DogSerializer {
 
     const reviews = await dog.$relatedQuery("reviews")
     const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews, userId)
-
 
     serializedDog.reviews = serializedReviews
     serializedDog.rating = this.averageRating(reviews)

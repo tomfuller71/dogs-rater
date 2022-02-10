@@ -32,7 +32,7 @@ const SignOutButton = () => {
 
   return (
     <a className="header-link" onClick={signOut}>
-      Sign Out
+      Sign out
     </a>
   );
 };

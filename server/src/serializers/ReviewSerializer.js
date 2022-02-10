@@ -3,8 +3,8 @@ import { Review } from "../models/index.js"
 class ReviewsSerializer {
   static async getReviewDetail(review, userId) {
     const user = await review.$relatedQuery("user")
-    
-    const allowedAttributes = ["rating", "description", "id"]
+
+    const allowedAttributes = ["rating", "description", "id", "userId"]
     let serializedReview = {}
     for (const attribute of allowedAttributes) {
       serializedReview[attribute] = review[attribute]
@@ -13,14 +13,14 @@ class ReviewsSerializer {
     const dog = await review.$relatedQuery("dog")
     const votes = await this.getVotes(review)
     if (userId) {
-        const votes = await review.$relatedQuery("votes")
-        const userVote = votes.find((vote) => vote.userId === userId)
-        if (userVote) {
-          serializedReview.userVote = userVote.userVote
-          // serializedReview.voteId = userVote.id
-        } 
+      const votes = await review.$relatedQuery("votes")
+      const userVote = votes.find((vote) => vote.userId === userId)
+      if (userVote) {
+        serializedReview.userVote = userVote.userVote
+        // serializedReview.voteId = userVote.id
+      }
     }
-    
+
     return {
       ...serializedReview,
       dogName: dog.dogName,

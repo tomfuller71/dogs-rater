@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
 import AddDogButton from "./AddDogButton.js";
 import Logo from "../../assets/logo.svg";
+import MobileLogo from "../../assets/mobile-logo.svg";
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
     <li key="sign-in">
       <Link to="/user-sessions/new" className="header-link">
-        Sign In
+        Sign in
       </Link>
     </li>,
     <li key="sign-up">
       <Link to="/users/new" className="header-link">
-        Sign Up
+        Sign up
       </Link>
     </li>,
   ];
@@ -37,6 +38,7 @@ const TopBar = ({ user }) => {
         <div className="header-left">
           <Link to="/">
             <img src={Logo} className="logo" alt="Pupperater" />
+            <img src={MobileLogo} className="mobile-logo" alt="Pupperater" />
           </Link>
         </div>
         <div className="header-right">

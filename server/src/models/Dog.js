@@ -1,26 +1,26 @@
-const Model = require("./Model");
+const Model = require("./Model")
 
 class Dog extends Model {
   static get tableName() {
-    return "dogs";
+    return "dogs"
   }
 
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["dogName", "userId"],
+      required: ["dogName", "userId", "image"],
       properties: {
         dogName: { type: "string", minLength: 1, maxLength: 30 },
-        pictureUrl: { type: "string" },
         userId: { type: ["integer", "string"] },
         description: { type: "string" },
+        image: { type: "string" },
       },
-    };
+    }
   }
 
   static get relationMappings() {
-    const Review = require("./Review");
-    const User = require("./User");
+    const Review = require("./Review")
+    const User = require("./User")
 
     return {
       reviews: {
@@ -40,7 +40,7 @@ class Dog extends Model {
           to: "users.id",
         },
       },
-    };
+    }
   }
 }
-module.exports = Dog;
+module.exports = Dog

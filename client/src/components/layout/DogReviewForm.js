@@ -23,22 +23,24 @@ const DogReviewForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Add new review
-        <input
-          type="text"
-          name="description"
-          onChange={handleInputChange}
-          value={newReview.description}
-        />
-      </label>
-      <label>
-        Rating
-        <input type="number" name="rating" onChange={handleInputChange} value={newReview.rating} />
-      </label>
-      <input className="button" type="submit" value="Submit" />
-    </form>
+    <div className="review-form-container">
+      <form className="review-form" onSubmit={handleSubmit}>
+        <label>
+          Add new review
+          <textarea name="description" onChange={handleInputChange} value={newReview.description} />
+        </label>
+        <label>
+          Rating
+          <input
+            type="number"
+            name="rating"
+            onChange={handleInputChange}
+            value={newReview.rating}
+          />
+        </label>
+        <input className="button" type="submit" value="Submit" />
+      </form>
+    </div>
   );
 };
 
