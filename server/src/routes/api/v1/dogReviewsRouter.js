@@ -47,7 +47,8 @@ dogReviewsRouter.post("/votes", async (req, res) => {
 })
 
 dogReviewsRouter.delete("/votes/:voteId", async (req, res) => {
-  const { voteId } = req.body
+  const { voteId } = req.params
+  console.log(voteId)
 
   if (!req.user) return res.status(201).json({ message: "Log in required" })
 

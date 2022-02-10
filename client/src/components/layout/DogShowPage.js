@@ -73,7 +73,7 @@ const DogShowPage = (props) => {
     if (update.removeExistingVote) {
       const previousVoteType = `${review.userVote}Votes`
       newReview[previousVoteType] -= 1
-      await deleteVote(review.id);
+      await deleteVote(review.voteId);
     }
 
     if (update.userVote === null) {
