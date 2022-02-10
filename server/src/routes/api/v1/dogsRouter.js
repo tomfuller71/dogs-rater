@@ -42,10 +42,12 @@ dogsRouter.post("/", uploadImage.single("image"), async (req, res) => {
 dogsRouter.get("/:id", async (req, res) => {
   try {
     const dog = await Dog.query().findById(req.params.id)
-    const serializedDog = await DogSerializer.getDogDetail(dog)
+    const userId = req.user?.id
+    const serializedDog = await DogSerializer.getDogDetail(dog, userId)
 
     return res.status(200).json({ dog: serializedDog })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error })
   }
 })

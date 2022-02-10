@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import EditForm from "./EditForm";
 
-const ReviewTile = ({ user, reviewerName, rating, description, reviewId }) => {
-  let linkVisibility = false;
-  if (user) {
-    if (reviewerName === user.name) {
-      linkVisibility = true;
-    }
-  }
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+
+const ReviewTile = ({ review, makeNewVote }) => {
+  const { rating, description, upVotes, downVotes, userVote, reviewId, userId } = review;
+
+  const linkVisibility = user?.id === userId;
 
   const [showEditForm, setShowEditForm] = useState(false);
   const [editedReview, setEditedReview] = useState({ description, rating });
+
+  let thumbUpColor = userVote === "up" ? "orange" : "grey";
+  let thumbDownColor = userVote === "down" ? "orange" : "grey";
 
   const editReview = async (editedReview, reviewId) => {
     try {
@@ -74,6 +78,14 @@ const ReviewTile = ({ user, reviewerName, rating, description, reviewId }) => {
     setShowEditForm(false);
   };
 
+  const upVoteHandler = (event) => {
+    makeNewVote("up", review);
+  };
+
+  const downVoteHandler = (event) => {
+    makeNewVote("down", review);
+  };
+
   return (
     <div className="grid-x review-tile">
       <div className="cell small-10">
@@ -88,6 +100,16 @@ const ReviewTile = ({ user, reviewerName, rating, description, reviewId }) => {
       </div>
       <div className="cell small-2 dog-rating">
         <h3>{rating}/10</h3>
+        <span>
+          <button onClick={upVoteHandler} className={thumbUpColor}>
+            <FontAwesomeIcon icon={faThumbsUp} className="icon" />
+          </button>{" "}
+          {upVotes}
+          <button onClick={downVoteHandler} className={thumbDownColor}>
+            <FontAwesomeIcon icon={faThumbsDown} className="icon" />
+          </button>{" "}
+          {downVotes}
+        </span>
       </div>
       {showEditForm && (
         <EditForm
