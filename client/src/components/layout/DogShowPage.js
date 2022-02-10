@@ -16,7 +16,7 @@ const DogShowPage = (props) => {
     reviews: [],
   });
 
-  const [shouldRedirect, setShouldRedirect] = useState(false)
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const dogId = props.match.params.id;
 
@@ -31,73 +31,121 @@ const DogShowPage = (props) => {
     getDog();
   }, []);
 
-  const updateVotes = (userVote, reviewId) => {
-    const index = dog.reviews.findIndex(review => review.id === reviewId)
-    const currentReview = dog.reviews[index]
-    const voteType = `${userVote}Votes`
-    const newReview = {
-      ...currentReview,
-       [voteType]: (currentReview[voteType] += 1)
+  const updateVotes = (userVote, review, deleting) => {
+    const index = dog.reviews.findIndex((element) => review.id === element.id);
+    const voteType = `${userVote}Votes`;
+    let newReview = {
+      ...review,
+      userVote,
+      [voteType]: (review[voteType] += 1),
+    };
+
+    if (deleting) {
+      const previousVoteType = `${review.userVote}Votes`
+      newReview[previousVoteType] -= 1
     }
 
-    const updatedReviews = [...dog.reviews]
-    updatedReviews.splice(index, 1, newReview)
+    const updatedReviews = [...dog.reviews];
+    updatedReviews.splice(index, 1, newReview);
 
-    return setDog({...dog, reviews: updatedReviews})
-  }
+    return setDog({ ...dog, reviews: updatedReviews });
+  };
 
-  const updateVoteStatus = (userVote, reviewId) => {
-    const index = dog.reviews.findIndex(review => review.id === reviewId)
-    const currentReview = dog.reviews[index]
-    const propName = "didVote"
-    const newReview = {
-      ...currentReview,
-       [propName]: true
+  // const updateVoteStatus = (userVote, reviewId) => {
+  //   const index = dog.reviews.findIndex(review => review.id === reviewId)
+  //   const currentReview = dog.reviews[index]
+  //   const updatedReviews = [...dog.reviews]
+  //   updatedReviews.splice(index, 1, newReview)
+
+  //   return setDog({...dog, reviews: updatedReviews})
+  // }
+
+  // const unVote = async (voteId) => {
+  //
+  // }
+
+  /*
+  If user not previously voted and click up 
+  return = { userVote: up, upvotes: +1 }
+
+  If user not previously voted and click up 
+  return = { userVote: up, upvotes: +1 }
+
+  User already voted up - then click on up
+  return = {userVote: null, upVotes: -1}
+
+  User already voted up - then they click down
+  return = { userVote: down, upvotes: -1, downVotes: +1}
+
+  User already voted down - then click on down
+  return = {userVote: null, downVotes: -1}
+
+  User already voted down - then they click up
+  return = { userVote: up, upvotes: +1, downVotes: -1}
+  
+*/
+
+  const deleteVote = async (voteId) => {
+    try {
+      const response = await fetch(`/api/v1/dogs/${dogId}/reviews/votes/${voteId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return true
+    } catch (error) {
+      console.log(error)
     }
+  };
 
-    const updatedReviews = [...dog.reviews]
-    updatedReviews.splice(index, 1, newReview)
-
-    return setDog({...dog, reviews: updatedReviews})
-  }
-
-  const logVote = async (userVote, reviewId) => {
-    const response = await Fetcher.post(
-      `/api/v1/dogs/${dogId}/reviews/votes`,
-       {userVote, reviewId}
-    )
+  const postNewVote = async (newVote, review) => {
+    const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews/votes`, {
+      newVote,
+      reviewId: review.id,
+    });
 
     if (!response.ok) {
       return setErrors(response.validationErrors);
     }
-
-    switch (response.data.message) {
-      case "Log in required":
-        return setShouldRedirect(true)
-      case "Already voted": 
-        return updateVoteStatus(userVote, reviewId)
-      case "Vote logged":
-        return updateVotes(userVote, reviewId)
-      default:
-        break;
-    }
+    return true
   }
 
-  if(shouldRedirect){
+  const logVote = async (newVote, review) => {
+    if (!user) return setShouldRedirect(true);
+
+    const existingVote = review?.userVote
+    let post = false, remove = false
+    if (!existingVote) {
+      post = true
+    } else if (newVote !== existingVote) {
+      post = true
+      remove = true
+    } else {
+      remove = true
+    }
+
+    if(post && remove){
+      await deleteVote(review.id)
+      await postNewVote(newVote, review)
+    } else if(post){
+      await postNewVote(newVote, review)
+    } else {
+      await deleteVote(review.id)
+    }
+    // await deleteVote(review.id)
+    // await postNewVote(newVote, review)
+    // updateVotes(newVote, review, false)
+    // updateVotes(newVote, review, true)
+};
+
+  if (shouldRedirect) {
     return <Redirect push to="/user-sessions/new" />;
   }
 
   const reviewsList = dog.reviews.map((review) => {
-    return (
-      <ReviewTile
-        key={review.id}
-        logVote={logVote}
-        {...review}
-      />
-    );
+    return <ReviewTile key={review.id} logVote={logVote} review={review} />;
   });
-
-  
 
   let dogDescription = "No description provided";
   if (dog.description) {

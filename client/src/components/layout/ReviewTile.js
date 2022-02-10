@@ -4,14 +4,16 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 
-const ReviewTile = ( { userName, rating, description, upVotes, downVotes, id, logVote, didVote } ) => {
+const ReviewTile = ( { review } ) => {
+
+  const  { userName, rating, description, upVotes, downVotes, logVote} = review
 
   const upVoteHandler = (event) => {
-    logVote('up', id)
+    logVote('up', review)
   }
 
   const downVoteHandler = (event) => {
-    logVote('down', id)
+    logVote('down', review)
   }
 
   return (
@@ -29,7 +31,6 @@ const ReviewTile = ( { userName, rating, description, upVotes, downVotes, id, lo
           </button>
           {" "}{downVotes}
           </span>
-          {didVote && <span> You Voted Already</span>}
       </div>
       <div className="cell small-3 dog-rating">{rating} / 10</div>
     </div>

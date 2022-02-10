@@ -2,7 +2,7 @@ import express from "express"
 import objection from "objection"
 const { ValidationError } = objection
 
-import { Dog, Review } from "../../../models/index.js"
+import { Dog, Review, Vote } from "../../../models/index.js"
 import cleanUserInput from "../../../services/cleanUserInput.js"
 
 const dogReviewsRouter = new express.Router({ mergeParams: true })
@@ -29,6 +29,7 @@ dogReviewsRouter.post("/", async (req, res) => {
   }
 })
 
+
 dogReviewsRouter.post("/votes", async (req, res) => {
   const { userVote, reviewId } = req.body
   if(!req.user) {
@@ -45,8 +46,24 @@ dogReviewsRouter.post("/votes", async (req, res) => {
       await votedReview.$relatedQuery("votes").insert({ userVote, userId })
       return res.status(201).json({ message: "Vote logged" })
     } else {
-      return res.status(201).json({ message: "Already voted"})
+      const deleteId = await votedReview.$relatedQuery("votes").find((vote) => vote.userId === userId).id
+      await Vote.query().deleteById(deleteId)
+      return res.status(201).json({ message: "Vote removed"})
     }
+  } catch (error) {
+    return res.status(500).json({ errors: error })
+  }
+})
+
+dogReviewsRouter.delete("/votes/:voteId", async (req, res) => {
+  const { voteId } = req.body
+
+  if(!req.user) return res.status(201).json({message: "Log in required"})
+
+  try {
+    await Vote.query().deleteById(voteId)
+    return res.status(201).json({ message: "Vote removed"})
+
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
