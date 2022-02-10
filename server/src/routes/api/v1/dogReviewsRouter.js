@@ -46,14 +46,18 @@ dogReviewsRouter.post("/votes", async (req, res) => {
   }
 })
 
-dogReviewsRouter.delete("/votes/:voteId", async (req, res) => {
-  const { voteId } = req.params
-  console.log(voteId)
+dogReviewsRouter.delete("/votes", async (req, res) => {
+  const { reviewId } = req.body
+  const userId = req.user.id
 
   if (!req.user) return res.status(201).json({ message: "Log in required" })
 
   try {
-    await Vote.query().deleteById(voteId)
+    await Vote.query()
+      .delete()
+      .where('reviewId', reviewId)
+      .where('userId', userId)
+      
     return res.status(201).json({ message: "Vote removed" })
   } catch (error) {
     return res.status(500).json({ errors: error })

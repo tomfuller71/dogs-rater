@@ -17,7 +17,7 @@ class ReviewsSerializer {
         const userVote = votes.find((vote) => vote.userId === userId)
         if (userVote) {
           serializedReview.userVote = userVote.userVote
-          serializedReview.voteId = userVote.id
+          // serializedReview.voteId = userVote.id
         } 
     }
     

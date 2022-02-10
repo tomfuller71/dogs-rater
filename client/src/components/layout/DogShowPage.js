@@ -31,13 +31,14 @@ const DogShowPage = (props) => {
     getDog();
   }, []);
 
-  const deleteVote = async (voteId) => {
+  const deleteVote = async (reviewId) => {
     try {
-      const response = await fetch(`/api/v1/dogs/${dogId}/reviews/votes/${voteId}`, {
+      const response = await fetch(`/api/v1/dogs/${dogId}/reviews/votes`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ reviewId })
       });
       return true
     } catch (error) {
@@ -64,16 +65,16 @@ const DogShowPage = (props) => {
       userVote: update.newUserVote
     }
     
+    if (update.removeExistingVote) {
+      const previousVoteType = `${review.userVote}Votes`
+      newReview[previousVoteType] -= 1
+      await deleteVote(review.id);
+    }
+    
     if (update.postNewVote) {
       const newVoteType = `${update.newUserVote}Votes`
       newReview[newVoteType] += 1
       await postNewVote(update.newUserVote, review)
-    }
-
-    if (update.removeExistingVote) {
-      const previousVoteType = `${review.userVote}Votes`
-      newReview[previousVoteType] -= 1
-      await deleteVote(review.voteId);
     }
 
     if (update.userVote === null) {
@@ -100,8 +101,8 @@ const DogShowPage = (props) => {
     if (!existingVote) {
       update.postNewVote = true
     } else if (newVote !== existingVote) {
-      update.postNewVote = true
       update.removeExistingVote = true
+      update.postNewVote = true
     } else {
       update.removeExistingVote = true
       update.newUserVote = null
