@@ -7,7 +7,7 @@ import DogReviewForm from "./DogReviewForm";
 
 const DogShowPage = (props) => {
   const { user } = props;
-
+  const [reviewFormVisibility, setReviewFormVisibility] = useState(false);
   const [dog, setDog] = useState({
     dogName: "",
     userId: "",
@@ -33,14 +33,16 @@ const DogShowPage = (props) => {
     return (
       <ReviewTile
         key={review.id}
-        userName={review.userName}
+        reviewerName={review.userName}
         description={review.description}
         rating={review.rating}
+        reviewId={review.id}
+        user={user}
       />
     );
   });
 
-  let dogDescription = "No description provided";
+  let dogDescription = null;
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
   }
@@ -53,17 +55,32 @@ const DogShowPage = (props) => {
     setDog({ ...dog, reviews: updatedReviews });
   };
 
+  const reviewClickHandler = (event) => {
+    event.preventDefault();
+    setReviewFormVisibility(!reviewFormVisibility);
+  };
+
   return (
-    <div className="grid-container">
+    <div className="grid-container fixed">
       <h1>{dog.dogName}</h1>
       {dogDescription}
-      <div className="grid-x grid-margin-x grid-padding-x">
-        <div className="cell small-12 large-6 fixed-container">
-          <img src={dog.pictureUrl} alt="Dog image" className="dog-image" />
-          <h4>Rating: {dog.rating}</h4>
+      <a className="show-review" onClick={reviewClickHandler}>
+        Review {dog.dogName}
+      </a>
+      <div className="grid-x grid-margin-x fullheight">
+        <div
+          className="cell small-12 large-5 dog-pic"
+          style={{
+            backgroundImage: `url(${dog.pictureUrl} )`,
+          }}
+        >
+          {reviewFormVisibility && <DogReviewForm postReview={postReview} user={user} />}
+          <h4>{dog.rating}/10</h4>
         </div>
-        <div className="cell small-12 large-6">{reviewsList}</div>
-        <DogReviewForm postReview={postReview} user={user} />
+
+        <div className="cell small-12 large-7 reviews">
+          <div className="overflow">{reviewsList}</div>
+        </div>
       </div>
     </div>
   );

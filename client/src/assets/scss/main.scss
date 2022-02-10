@@ -1,6 +1,7 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @import "./top-bar.scss";
+@import "./show-page.scss";
 @include foundation-everything;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap");
 *,
@@ -14,9 +15,22 @@
   tab-size: 4;
   --yellow: #ff9505;
   --orange: #ec4e20;
+  --translucent-orange: #ec4e20cc;
   --slate: #637081;
+  --green: #929982;
+  --green2: #60935d;
+  --charcoal-blue: #364156;
+  --midnight: #114b5f;
+  --carolina-blue: #5299d3;
+  --light-gray: #f0edef;
+  --medium-gray: #ececec;
+  --purple: #5f1a37;
+  --pink: #830a48;
 }
 
+body {
+  background-color: var(--light-gray);
+}
 body,
 html,
 h1,
@@ -31,6 +45,26 @@ span {
   font-family: "Outfit", "Avenir Next", Avenir, "Helvetica Neue", Helvetica, sans-serif;
 }
 
+h1,
+h2 {
+  font-weight: 600;
+  font-size: 3.5rem;
+}
+
+.subhead {
+  margin: 0 0 40px;
+  font-weight: 500;
+}
+
+.btn {
+  color: white;
+  background-color: var(--carolina-blue);
+  border: none;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 .dog.cell img {
   min-height: 268px;
   object-fit: cover;
@@ -42,12 +76,108 @@ span {
   justify-content: space-between;
 }
 
-.review-tile a {
-  display: inline-block;
-  color: var(--slate);
-  margin-right: 15px;
+.dog.card {
+  border: none;
+}
+.dog.card:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.review-tile a:hover {
-  border-bottom: 1px solid var(--slate);
+.grid-container {
+  margin: 40px auto;
+}
+
+.orange {
+  background-color: var(--orange);
+}
+
+.card-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 8px;
+  padding-bottom: 0px;
+
+  .review-count {
+    text-align: right;
+    vertical-align: middle;
+    color: white;
+    margin-bottom: 0;
+    line-height: 1;
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  .dog-name {
+    vertical-align: middle;
+    color: white;
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-weight: 600;
+  }
+}
+
+.card-top {
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+  min-height: 300px;
+}
+
+h4.rating {
+  position: absolute;
+  line-height: 1;
+  bottom: 10px;
+  right: 16px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 2px rgb(0, 0, 0);
+  z-index: 100;
+}
+
+.card-top:before {
+  content: "";
+  z-index: 99;
+  position: absolute;
+  top: 170px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+}
+.dog-image {
+  z-index: 2;
+}
+
+@media (max-width: 1200px) {
+  .grid-container {
+    padding: 0px 6%;
+  }
+}
+
+@media (max-width: 640px) {
+  .card-top {
+    min-height: 448px;
+  }
+  .card-section {
+    padding-top: 15px;
+    padding-bottom: 4px;
+    h4 {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+}
+
+@media (max-width: 460px) {
+  .card-top {
+    min-height: 300px;
+  }
 }

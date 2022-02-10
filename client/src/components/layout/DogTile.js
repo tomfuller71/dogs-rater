@@ -2,20 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DogTile = ({ dog }) => {
-  const { id, pictureUrl, dogName, rating} = dog
-  
+  const { id, pictureUrl, dogName, rating, reviews } = dog;
+
+  let reviewCount = "reviews";
+  if (reviews.length === 1) {
+    reviewCount = " review";
+  }
+
   return (
-    <div className="dog cell card small-6 medium-4 large-3">
+    <div className="dog cell card small-12 medium-6 large-4">
       <Link to={`/dogs/${id}`}>
-      <img src={pictureUrl} alt="Dog image" className="dog-image" />
-      <div className="card-section orange">
-        <div className="cell small-6 dog-tile-bottom">
-            <h4>{dogName}</h4>
-            {rating && (
-              <h4> {rating} / 10</h4>
-            )}
+        <div
+          className="card-top"
+          style={{
+            backgroundImage: `url(${pictureUrl} )`,
+          }}
+        >
+          {rating && <h4 className="rating"> {rating} / 10</h4>}
         </div>
-      </div>
+        <div className="card-section orange grid-x">
+          <div className="dog-name cell small-6">
+            <h4>{dogName}</h4>
+          </div>
+          <div className="review-count cell small-6">
+            <p className="reviewCount">
+              {reviews.length} &nbsp;{reviewCount}
+            </p>
+          </div>
+        </div>
       </Link>
     </div>
   );
