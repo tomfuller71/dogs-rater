@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import Fetcher from "./services/Fetcher.js";
-import ErrorList from "./ErrorList.js"
+import ErrorList from "./ErrorList.js";
 
 const NewDogForm = ({ user }) => {
   const defaultFormValue = {
     dogName: "",
-    description: ""
+    description: "",
   };
 
   const [newDog, setNewDog] = useState(defaultFormValue);
@@ -44,46 +44,32 @@ const NewDogForm = ({ user }) => {
   }
 
   return (
-    <div className="grid-x grid-margin-x">
-      <div className="cell small-10 medium-8">
-        <h1>Add a New Dog</h1>
-        <ErrorList errors={errors} />
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="dogName"
-              value={newDog.dogName}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Description (Optional):
-            <input
-              type="text"
-              name="description"
-              onChange={handleInputChange}
-              value={newDog.description}
-            />
-          </label>
-          <div className="button-group">
-            <input
-              className="button"
-              type="submit"
-              value="Submit"
-            />
-            <input
-              className="button"
-              type="button"
-              value="Clear Form"
-              onClick={clearForm}
-            />
-          </div>
-        </form>
-      </div>
+    <div className="form-container">
+      <h1>Add a New Dog</h1>
+
+      <ErrorList errors={errors} />
+      <form className="new-dog-form" onSubmit={handleSubmit}>
+        <label>
+          Your dog's name:
+          <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
+        </label>
+        <label>
+          Description (optional):
+          <textarea
+            type="text"
+            name="description"
+            onChange={handleInputChange}
+            value={newDog.description}
+            rows="3"
+          />
+        </label>
+        <div className="button-group">
+          <input className="submit button" type="submit" value="Submit" />
+          <input className="clear button" type="button" value="Clear Form" onClick={clearForm} />
+        </div>
+      </form>
     </div>
   );
 };
 
-export default NewDogForm
+export default NewDogForm;

@@ -2,6 +2,8 @@
 @import "~foundation-sites/scss/foundation";
 @import "./top-bar.scss";
 @import "./show-page.scss";
+@import "./new-dog-form.scss";
+@import "./user-profile.scss";
 @include foundation-everything;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap");
 *,
@@ -16,6 +18,7 @@
   --yellow: #ff9505;
   --orange: #ec4e20;
   --translucent-orange: #ec4e20cc;
+  --button-orange: #ec6709;
   --slate: #637081;
   --green: #929982;
   --green2: #60935d;
@@ -25,6 +28,7 @@
   --light-gray: #f0edef;
   --medium-gray: #ececec;
   --purple: #5f1a37;
+  --lighter-purple: #6e356e;
   --pink: #830a48;
 }
 

@@ -1,0 +1,90 @@
+.dropzone {
+  border: 3px dashed var(--silver);
+  background-color: white;
+  padding-top: 24px;
+  padding-bottom: 12px;
+  display: block;
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--silver);
+    text-align: center;
+  }
+}
+
+.form-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 60px auto;
+
+  .button-group {
+    column-gap: 12px;
+    margin-top: 20px;
+
+    .button {
+      font-size: 1rem;
+      font-weight: 500;
+      width: 100%;
+      max-width: 140px;
+    }
+
+    .submit {
+      background-color: var(--button-orange);
+      border: 2px solid var(--button-orange);
+    }
+    .submit:hover {
+      background-color: var(--lighter-purple);
+      border: 2px solid var(--lighter-purple);
+    }
+
+    .clear {
+      background-color: transparent;
+      color: black;
+      border: 2px solid black;
+    }
+
+    .clear:hover {
+      border: 2px solid var(--lighter-purple);
+      background-color: transparent;
+      color: var(--lighter-purple);
+    }
+  }
+}
+
+.new-dog-form,
+.sign-in-form {
+  label {
+    font-size: 1.08rem;
+    line-height: 210%;
+    margin-bottom: 25px;
+  }
+}
+
+.sign-in-form-container {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 60px;
+
+  .wrapper {
+    padding: 6%;
+    background-color: white;
+    position: relative;
+    vertical-align: middle;
+  }
+}
+
+.sign-in-form {
+  input[type="text"] {
+    height: 40px;
+  }
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-image: url("https://drive.google.com/uc?id=1ANcaZMOGTyIvZQZJi4yuNoHumJHicCBB");
+  background-position: bottom center;
+  background-size: cover;
+}

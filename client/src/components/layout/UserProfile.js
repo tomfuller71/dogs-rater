@@ -83,23 +83,25 @@ const UserProfile = (props) => {
   });
 
   return (
-    <div className="grid-x grid-margin-x align-center">
-      <div className="cell small-10">
-        <h1>User Profile</h1>
-        <div className="callout">
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
+    <div className="grid-container-large profile">
+      <div className="grid-x grid-margin-x align-center">
+        <div className="cell small-12">
+          <h1>My Profile</h1>
+          <div className="callout user-info">
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+          </div>
         </div>
-      </div>
 
-      <div className="cell callout small-5">
-        <h2>My Dogs</h2>
-        <ul>{dogs}</ul>
-      </div>
+        <div className="cell small-12 medium-5">
+          <h3>My Dogs</h3>
+          <ul>{dogs}</ul>
+        </div>
 
-      <div className="cell callout small-5">
-        <h2>My Reviews</h2>
-        <ul>{reviews}</ul>
+        <div className="cell small-12 medium-7">
+          <h3>My Reviews</h3>
+          <ul>{reviews}</ul>
+        </div>
       </div>
     </div>
   );
