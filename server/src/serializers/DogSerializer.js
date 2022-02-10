@@ -2,7 +2,7 @@ import { Dog } from "../models/index.js"
 import ReviewsSerializer from "./ReviewSerializer.js"
 
 class DogSerializer {
-  static async getDogDetail(dog) {
+  static async getDogDetail(dog, userId) {
     const allowedAttributes = ["id", "dogName", "pictureUrl", "description"]
 
     let serializedDog = {}
@@ -11,7 +11,8 @@ class DogSerializer {
     }
 
     const reviews = await dog.$relatedQuery("reviews")
-    const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews)
+    const serializedReviews = await ReviewsSerializer.getReviewCollectionDetails(reviews, userId)
+
 
     serializedDog.reviews = serializedReviews
     serializedDog.rating = this.averageRating(reviews)

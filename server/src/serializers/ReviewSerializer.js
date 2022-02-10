@@ -1,8 +1,9 @@
 import { Review } from "../models/index.js"
 
 class ReviewsSerializer {
-  static async getReviewDetail(review) {
+  static async getReviewDetail(review, userId) {
     const user = await review.$relatedQuery("user")
+    
     const allowedAttributes = ["rating", "description", "id"]
     let serializedReview = {}
     for (const attribute of allowedAttributes) {
@@ -10,18 +11,39 @@ class ReviewsSerializer {
     }
 
     const dog = await review.$relatedQuery("dog")
-    serializedReview.userName = user.name
-    serializedReview.dogName = dog.dogName
-    serializedReview.dogId = dog.id
-    return serializedReview
+    const votes = await this.getVotes(review)
+    if (userId) {
+        const votes = await review.$relatedQuery("votes")
+        const userVote = votes.find((vote) => vote.userId === userId)
+        if (userVote) {
+          serializedReview.userVote = userVote.userVote
+          // serializedReview.voteId = userVote.id
+        } 
+    }
+    
+    return {
+      ...serializedReview,
+      dogName: dog.dogName,
+      userName: user.name,
+      dogId: dog.id,
+      ...votes,
+    }
   }
 
-  static async getReviewCollectionDetails(reviews) {
+  static async getReviewCollectionDetails(reviews, userId) {
     return Promise.all(
       reviews.map((review) => {
-        return this.getReviewDetail(review)
+        return this.getReviewDetail(review, userId)
       })
     )
+  }
+
+  static async getVotes(review) {
+    const votes = await review.$relatedQuery("votes")
+    const upVotes = votes.filter((vote) => vote.userVote === "up").length
+    const downVotes = votes.length - upVotes
+
+    return { upVotes, downVotes }
   }
 }
 

@@ -51,3 +51,16 @@ span {
 .review-tile a:hover {
   border-bottom: 1px solid var(--slate);
 }
+
+.fa {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.grey {
+  color: grey;
+}
+
+.orange {
+  color: orange
+}
