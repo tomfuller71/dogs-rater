@@ -95,3 +95,12 @@ ul.menu {
     flex-basis: 10%;
   }
 }
+
+@media (min-width: 900px) {
+  .header .menu li,
+  .header .menu a {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+  }
+}

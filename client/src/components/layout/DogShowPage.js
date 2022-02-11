@@ -122,28 +122,27 @@ const DogShowPage = (props) => {
     const updatedReviews = [...dog.reviews, response.data.newReview];
     setDog({ ...dog, reviews: updatedReviews });
   };
-  
-    const deleteReview = async (reviewId) => {
-      try {
-        const response = await fetch(`/api/v1/users/${user.id}/${reviewId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error(`${response.status} ${response.statusText}`);
-        }
-  
-        const index = dog.reviews.findIndex((element) => reviewId === element.id)
-        const updatedReviews= [...dog.reviews]
-        updatedReviews.splice(index,1)
-        setDog({ ...dog, reviews: updatedReviews });
-  
-      } catch (error) {
-        console.error(`Error in fetch: ${error.message}`);
+
+  const deleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(`/api/v1/users/${user.id}/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
       }
-    };
+
+      const index = dog.reviews.findIndex((element) => reviewId === element.id);
+      const updatedReviews = [...dog.reviews];
+      updatedReviews.splice(index, 1);
+      setDog({ ...dog, reviews: updatedReviews });
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+    }
+  };
 
   if (shouldRedirect) {
     return <Redirect push to="/user-sessions/new" />;
@@ -158,8 +157,8 @@ const DogShowPage = (props) => {
         review={review}
         user={user}
       />
-    )
-  })
+    );
+  });
 
   let dogDescription = null;
   if (dog.description) {
