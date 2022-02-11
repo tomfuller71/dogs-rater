@@ -17,7 +17,7 @@ const RegistrationForm = () => {
 
   const validateInput = (payload) => {
     const { email, password, passwordConfirmation, name } = payload;
-    const emailRegexp = config.validation.email.regexp;
+    const emailRegexp = config.validation.email.regexp.emailRegex;
 
     let newErrors = {
       email: "",
@@ -34,7 +34,7 @@ const RegistrationForm = () => {
     }
 
     if (name.trim() == "") {
-      newErrors.name = "Is invalid";
+      newErrors.name = "Is required";
       hasErrors = true;
     }
 

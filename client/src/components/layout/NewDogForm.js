@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import translateServerErrors from "./services/translateServerErrors.js";
-
-import ErrorList from "./ErrorList.js";
 import Dropzone from "react-dropzone";
+
+import translateServerErrors from "./services/translateServerErrors.js";
+import ErrorList from "./ErrorList.js";
 
 const NewDogForm = ({ user }) => {
   const defaultFormValue = {
@@ -24,12 +24,11 @@ const NewDogForm = ({ user }) => {
   };
 
   const getNewDog = async (event) => {
-    const userId = user.id;
     const newDogBody = new FormData();
-    newDogBody.append("dogName", newDog.dogName);
-    newDogBody.append("description", newDog.description);
-    newDogBody.append("image", newDog.image);
-    newDogBody.append("userId", userId);
+    for (const key of Object.keys(newDog)) {
+      newDogBody.append(key, newDog[key])
+    }
+    newDogBody.append("userId", user,id);
 
     try {
       const response = await fetch("/api/v1/dogs", {
@@ -45,10 +44,7 @@ const NewDogForm = ({ user }) => {
           const newErrors = translateServerErrors(body.errors);
           return setErrors(newErrors);
         } else {
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-
-          throw error;
+          throw new Error(`${response.status} (${response.statusText})`)
         }
       }
       const body = await response.json();
@@ -97,7 +93,11 @@ const NewDogForm = ({ user }) => {
         </Dropzone>
         <label>
           Name:
-          <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="dogName"
+            value={newDog.dogName}
+            onChange={handleInputChange} />
         </label>
         <label>
           Description (Optional):

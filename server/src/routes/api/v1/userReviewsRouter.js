@@ -26,7 +26,10 @@ userReviewsRouter.patch("/", async (req, res) => {
   const { body } = req
   const formInput = cleanUserInput(body)
   try {
-    const updatedReview = await Review.query().patchAndFetchById(reviewId, formInput)
+    const updatedReview = await Review
+      .query()
+      .patchAndFetchById(reviewId, formInput)
+    
     const user = await User.query().findById(userId)
     const serializedUser = await UserSerializer.getUserDetail(user)
 
