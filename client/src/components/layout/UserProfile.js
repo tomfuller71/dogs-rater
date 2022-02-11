@@ -83,7 +83,7 @@ const UserProfile = (props) => {
   });
 
   return (
-    <div className="grid-x grid-margin-x align-center">
+    <div className="grid-container profile">
       <div className="cell small-10">
         <h1>User Profile</h1>
         <div className="callout">
@@ -91,15 +91,16 @@ const UserProfile = (props) => {
           <p>Email: {user.email}</p>
         </div>
       </div>
+      <div className="grid-x">
+        <div className="cell small-12 large-5">
+          <h3>My Dogs</h3>
+          <ul>{dogs}</ul>
+        </div>
 
-      <div className="cell callout small-5">
-        <h2>My Dogs</h2>
-        <ul>{dogs}</ul>
-      </div>
-
-      <div className="cell callout small-5">
-        <h2>My Reviews</h2>
-        <ul>{reviews}</ul>
+        <div className="cell small-12 large-7">
+          <h3>My Reviews</h3>
+          <ul>{reviews}</ul>
+        </div>
       </div>
     </div>
   );

@@ -40,6 +40,7 @@
   padding: 1.5rem;
   background-color: white;
   margin-bottom: 15px;
+  position: relative;
 
   a {
     display: inline-block;
@@ -85,8 +86,14 @@
     opacity: 100%;
     font-weight: 600;
   }
-}
 
+  input[type="textarea"],
+  input[type="number"] {
+    border: none;
+  }
+}
+.buttton-group {
+}
 .flex {
   display: flex;
   justify-content: space-between;
@@ -114,12 +121,15 @@
   }
 }
 
-.fixed {
-  height: 80vh;
+.fixed.grid-container {
+  height: 92vh;
   overflow: hidden;
+  margin: 0 auto;
 }
+
 .fullheight {
-  height: 90%;
+  max-height: 500px;
+  height: 100%;
 }
 
 .overflow {
@@ -131,4 +141,36 @@
 .reviews {
   position: relative;
   height: 100%;
+}
+
+.edit-links {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.vote-block {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 16px;
+
+  .icon {
+    margin-right: 5px;
+  }
+  .icon.orange {
+    color: var(--orange);
+    background-color: transparent;
+    :hover {
+      opacity: 60%;
+    }
+  }
+  .icon.grey {
+    color: #cbcbcb;
+
+    :hover {
+      color: #8f8f8f;
+    }
+  }
 }

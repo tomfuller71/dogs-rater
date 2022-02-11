@@ -6,7 +6,7 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 const ReviewTile = ({ review, makeNewVote, user }) => {
-  const { rating, description, upVotes, downVotes, userVote, reviewId, userId } = review;
+  const { rating, description, upVotes, downVotes, userVote, userId } = review;
 
   const linkVisibility = user?.id === userId;
 
@@ -54,7 +54,6 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
-
   const editHandler = (event) => {
     event.preventDefault();
     setShowEditForm(!showEditForm);
@@ -62,7 +61,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
 
   const deleteHandler = (event) => {
     event.preventDefault();
-    deleteReview(reviewId);
+    deleteReview(review.id);
   };
 
   const handleInputChange = (event) => {
@@ -74,7 +73,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    editReview(editedReview, reviewId);
+    editReview(editedReview, review.id);
     setShowEditForm(false);
   };
 
@@ -91,26 +90,35 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
       <div className="cell small-10">
         <h5>{review.userName}</h5>
         <p>{description}</p>
+        <div className="vote-block">
+          <div className="upvotes">
+            <FontAwesomeIcon
+              onClick={upVoteHandler}
+              icon={faThumbsUp}
+              className={`icon ${thumbUpColor}`}
+            />
+            {upVotes}
+          </div>
+          <div className="downvotes">
+            <FontAwesomeIcon
+              onClick={downVoteHandler}
+              icon={faThumbsDown}
+              className={`icon ${thumbDownColor}`}
+            />
+            {downVotes}
+          </div>
+        </div>
         {linkVisibility && (
-          <>
+          <div className="edit-links">
             <a onClick={editHandler}>Edit</a>
             <a onClick={deleteHandler}>Delete</a>
-          </>
+          </div>
         )}
       </div>
       <div className="cell small-2 dog-rating">
         <h3>{rating}/10</h3>
-        <span>
-          <button onClick={upVoteHandler} className={thumbUpColor}>
-            <FontAwesomeIcon icon={faThumbsUp} className="icon" />
-          </button>{" "}
-          {upVotes}
-          <button onClick={downVoteHandler} className={thumbDownColor}>
-            <FontAwesomeIcon icon={faThumbsDown} className="icon" />
-          </button>{" "}
-          {downVotes}
-        </span>
       </div>
+
       {showEditForm && (
         <EditForm
           editedReview={editedReview}

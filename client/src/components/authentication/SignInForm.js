@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import config from "../../config";
 import FormError from "../layout/FormError";
+import { Link } from "react-router-dom";
 
 const SignInForm = () => {
   const [userPayload, setUserPayload] = useState({ email: "", password: "" });
@@ -66,32 +67,39 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="grid-container" onSubmit={onSubmit}>
-      <h1>Sign In</h1>
-      <form>
-        <div>
-          <label>
-            Email
-            <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
-            <FormError error={errors.email} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
-              type="password"
-              name="password"
-              value={userPayload.password}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.password} />
-          </label>
-        </div>
-        <div>
+    <div className="form-background">
+      <div className="form grid-container" onSubmit={onSubmit}>
+        <h2>Sign into Pupperater</h2>
+        <form>
+          <div>
+            <label>
+              Email
+              <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
+              <FormError error={errors.email} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password
+              <input
+                type="password"
+                name="password"
+                value={userPayload.password}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.password} />
+            </label>
+          </div>
+
           <input type="submit" className="button" value="Sign In" />
-        </div>
-      </form>
+          <h5>
+            Don't have an account?
+            <Link to="/users/new" className="link">
+              Sign up
+            </Link>
+          </h5>
+        </form>
+      </div>
     </div>
   );
 };
