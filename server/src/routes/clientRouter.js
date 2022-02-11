@@ -9,7 +9,8 @@ const clientRoutes = [
   "/dogs/:id",
   "/dogs/new",
   "/user-sessions/new",
-  "/users/new"
+  "/users/new",
+  "/user-profile",
 ];
 
 router.get(clientRoutes, (req, res) => {

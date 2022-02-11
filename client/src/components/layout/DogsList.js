@@ -25,26 +25,15 @@ const DogsList = (props) => {
   }, []);
 
   const dogTiles = dogs.map((dog) => {
-    return (
-        <DogTile
-          key={dog.id}
-          id={dog.id}
-          rating={dog.rating}
-          name={dog.dogName}
-          pictureUrl={dog.pictureUrl}
-          dog={dog}
-        />
-    );
+    return <DogTile key={dog.id} dog={dog} />;
   });
 
   return (
-    <>
+    <div className="grid-container index-page">
       <h1>America's Top Doggos</h1>
-      <h4>Your definitive source for good gurls and bois</h4>
-      <div className="grid-container">
-        <div className="grid-x grid-margin-x">{dogTiles}</div>
-      </div>
-    </>
+      <h4 className="subhead">Your definitive source for good gurls and bois</h4>
+      <div className="grid-x grid-margin-x">{dogTiles}</div>
+    </div>
   );
 };
 
