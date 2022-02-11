@@ -7,15 +7,15 @@
  */
 exports.up = async (knex) => {
   return knex.schema.alterTable("dogs", (table) => {
-    table.string("pictureUrl").nullable().alter();
-  });
-};
+    // table.string("pictureUrl").nullable().alter();
+  })
+}
 
 /**
  * @param {Knex} knex
  */
 exports.down = (knex) => {
   return knex.schema.alterTable("dogs", (table) => {
-    table.string("pictureUrl").notNullable().alter();
-  });
-};
+    // table.string("pictureUrl").notNullable().alter();
+  })
+}
