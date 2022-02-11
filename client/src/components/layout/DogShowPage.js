@@ -12,7 +12,7 @@ const DogShowPage = (props) => {
     dogName: "",
     userId: "",
     description: "",
-    pictureUrl: "",
+    image: "",
     reviews: [],
   });
 
@@ -127,10 +127,20 @@ const DogShowPage = (props) => {
   }
 
   const reviewsList = dog.reviews.map((review) => {
-    return <ReviewTile key={review.id} makeNewVote={makeNewVote} review={review} />;
+    return <ReviewTile key={review.id} makeNewVote={makeNewVote} review={review} user={user} />;
   });
 
-  let dogDescription = "No description provided";
+  let emptyReviews = null;
+  if (!dog.reviews.length) {
+    emptyReviews = (
+      <div className="empty-reviews">
+        <h3>It's heckin' empty. Be the first to write a review.</h3>
+        <div className="button">Review {dog.dogName}</div>
+      </div>
+    );
+  }
+
+  let dogDescription = null;
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
   }
@@ -154,11 +164,18 @@ const DogShowPage = (props) => {
             backgroundImage: `url(${dog.image} )`,
           }}
         >
-          {reviewFormVisibility && <DogReviewForm postReview={postReview} user={user} />}
+          {reviewFormVisibility && (
+            <DogReviewForm
+              postReview={postReview}
+              user={user}
+              reviewClickHandler={reviewClickHandler}
+            />
+          )}
           <h4>{dog.rating}/10</h4>
         </div>
 
         <div className="cell small-12 large-7 reviews">
+          {emptyReviews}
           <div className="overflow">{reviewsList}</div>
         </div>
       </div>

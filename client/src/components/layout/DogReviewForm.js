@@ -29,16 +29,29 @@ const DogReviewForm = (props) => {
           Add new review
           <textarea name="description" onChange={handleInputChange} value={newReview.description} />
         </label>
-        <label>
+
+        <label className="rating-label">
           Rating
-          <input
-            type="number"
-            name="rating"
-            onChange={handleInputChange}
-            value={newReview.rating}
-          />
+          <select name="rating" value={newReview.rating} onChange={handleInputChange}>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+          </select>
         </label>
-        <input className="button" type="submit" value="Submit" />
+
+        <div className="button-group">
+          <input className="button" type="submit" value="Submit" />
+          <div className="cancel button" onClick={props.reviewClickHandler}>
+            Cancel
+          </div>
+        </div>
       </form>
     </div>
   );

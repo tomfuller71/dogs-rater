@@ -88,9 +88,9 @@ const NewDogForm = ({ user }) => {
         <Dropzone onDrop={handleImageUpload}>
           {({ getRootProps, getInputProps }) => (
             <section>
-              <div {...getRootProps()}>
+              <div className="drop-zone" {...getRootProps()}>
                 <input {...getInputProps()} />
-                <p>Upload Your Dog - drag 'n' drop or click to upload</p>
+                <p>Drag and drop your dog pic, or click to upload</p>
               </div>
             </section>
           )}
