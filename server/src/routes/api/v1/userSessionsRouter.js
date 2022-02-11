@@ -16,7 +16,7 @@ sessionRouter.post("/", (req, res, next) => {
       });
     }
 
-    return res.status(401).json(undefined);
+    return res.status(401).json({ error: "Either username or password were incorrect"});
   })(req, res, next);
 });
 
