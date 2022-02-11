@@ -11,7 +11,7 @@ const SignInForm = () => {
   const validateInput = (payload) => {
     setErrors({});
     const { email, password } = payload;
-    const emailRegexp = config.validation.email.regexp;
+    const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
     if (!email.match(emailRegexp)) {
       newErrors = {
@@ -43,11 +43,14 @@ const SignInForm = () => {
           }),
         });
         if (!response.ok) {
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw error;
+          if(response?.body) {
+            const  responseData = await response.json()
+            const errMessage = responseData.error
+            return setErrors({ password: errMessage })
+          } else {
+            throw new Error(`${response.status}: ${response.statusText}`)
+          }
         }
-        const userData = await response.json();
         setShouldRedirect(true);
       }
     } catch (err) {

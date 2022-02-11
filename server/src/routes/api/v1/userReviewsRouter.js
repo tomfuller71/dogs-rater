@@ -11,12 +11,15 @@ userReviewsRouter.delete("/", async (req, res) => {
   const { reviewId, userId } = req.params
 
   try {
+    const review = await Review.query().findById(reviewId)
+    await review.$relatedQuery("votes").delete()
     await Review.query().deleteById(reviewId)
     const user = await User.query().findById(userId)
     const serializedUser = await UserSerializer.getUserDetail(user)
 
     return res.status(201).json({ data: serializedUser })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error })
   }
 })
@@ -26,7 +29,10 @@ userReviewsRouter.patch("/", async (req, res) => {
   const { body } = req
   const formInput = cleanUserInput(body)
   try {
-    const updatedReview = await Review.query().patchAndFetchById(reviewId, formInput)
+    const updatedReview = await Review
+      .query()
+      .patchAndFetchById(reviewId, formInput)
+    
     const user = await User.query().findById(userId)
     const serializedUser = await UserSerializer.getUserDetail(user)
 

@@ -3,23 +3,25 @@ import objection from "objection"
 const { ValidationError } = objection
 
 import { Dog, Review, Vote } from "../../../models/index.js"
+import ReviewsSerializer from "../../../serializers/ReviewSerializer.js"
 import cleanUserInput from "../../../services/cleanUserInput.js"
 
 const dogReviewsRouter = new express.Router({ mergeParams: true })
 
 dogReviewsRouter.post("/", async (req, res) => {
   const { dogId } = req.params
-  const { body } = req
-  const formInput = cleanUserInput(body)
-  formInput.userId = req.user.id
-  formInput.dogId = dogId
+  const formInput = {
+    ...cleanUserInput(req.body),
+    userId: req.user.id,
+    dogId: dogId
+  }
 
   try {
     const dog = await Dog.query().findById(dogId)
-    const newReview = await dog.$relatedQuery("reviews").insertAndFetch(formInput)
-    const user = await newReview.$relatedQuery("user")
-    newReview.userName = user.name
-    return res.status(201).json({ newReview: newReview })
+    const review = await dog.$relatedQuery("reviews").insertAndFetch(formInput)
+    const serializedReview = await ReviewsSerializer.getReviewDetail(review)
+
+    return res.status(201).json({ newReview: serializedReview })
   } catch (error) {
     if (error instanceof ValidationError) {
       return res.status(422).json({ errors: error.data })
