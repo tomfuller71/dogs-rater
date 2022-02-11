@@ -33,6 +33,9 @@ const DogReviewForm = (props) => {
         <label className="rating-label">
           Rating
           <select name="rating" value={newReview.rating} onChange={handleInputChange}>
+            <option value="" disabled>
+              Pick a number
+            </option>
             <option value="11">11</option>
             <option value="12">12</option>
             <option value="13">13</option>
