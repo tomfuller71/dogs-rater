@@ -4,6 +4,7 @@ import ReviewTile from "./ReviewTile";
 import { withRouter, Redirect } from "react-router-dom";
 import Fetcher from "./services/Fetcher.js";
 import DogReviewForm from "./DogReviewForm";
+import ErrorList from "./ErrorList";
 
 const DogShowPage = (props) => {
   const { user } = props;
@@ -17,7 +18,7 @@ const DogShowPage = (props) => {
   });
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const dogId = props.match.params.id;
 
   const getDog = async () => {
@@ -113,7 +114,7 @@ const DogShowPage = (props) => {
 
   const postReview = async (review) => {
     const response = await Fetcher.post(`/api/v1/dogs/${dogId}/reviews`, review);
-
+    debugger;
     if (!response.ok) {
       return setErrors(response.validationErrors);
     }
@@ -130,16 +131,6 @@ const DogShowPage = (props) => {
     return <ReviewTile key={review.id} makeNewVote={makeNewVote} review={review} user={user} />;
   });
 
-  let emptyReviews = null;
-  if (!dog.reviews.length) {
-    emptyReviews = (
-      <div className="empty-reviews">
-        <h3>It's heckin' empty. Be the first to write a review.</h3>
-        <div className="button">Review {dog.dogName}</div>
-      </div>
-    );
-  }
-
   let dogDescription = null;
   if (dog.description) {
     dogDescription = <p>{dog.description}</p>;
@@ -150,6 +141,17 @@ const DogShowPage = (props) => {
     setReviewFormVisibility(!reviewFormVisibility);
   };
 
+  let emptyReviews = null;
+  if (!dog.reviews.length) {
+    emptyReviews = (
+      <div className="empty-reviews">
+        <h3>It's heckin' empty. Be the first to write a review.</h3>
+        <div onClick={reviewClickHandler} className="button">
+          Review {dog.dogName}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="grid-container fixed">
       <h1>{dog.dogName}</h1>
@@ -172,6 +174,7 @@ const DogShowPage = (props) => {
             />
           )}
           <h4>{dog.rating}/10</h4>
+          <ErrorList errors={errors} />
         </div>
 
         <div className="cell small-12 large-7 reviews">
