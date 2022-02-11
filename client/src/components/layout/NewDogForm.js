@@ -17,7 +17,7 @@ const NewDogForm = ({ user }) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [fileName, setFileName] = useState("");
 
-  const handleImageUpload = (acceptedFiles) => {
+  const handleImageUpload = (acceptedImage) => {
     setFileName(acceptedFiles[0].name);
     setNewDog({
       ...newDog,
@@ -26,12 +26,12 @@ const NewDogForm = ({ user }) => {
   };
 
   const getNewDog = async (event) => {
+    const userId = user.id;
     const newDogBody = new FormData();
-    for (const key of Object.keys(newDog)) {
-      newDogBody.append(key, newDog[key])
-    }
-    newDogBody.append("userId", user,id);
-
+    newDogBody.append("dogName", newDog.dogName);
+    newDogBody.append("description", newDog.description);
+    newDogBody.append("image", newDog.image);
+    newDogBody.append("userId", userId);
     try {
       const response = await fetch("/api/v1/dogs", {
         method: "POST",
@@ -46,7 +46,7 @@ const NewDogForm = ({ user }) => {
           const newErrors = translateServerErrors(body.errors);
           return setErrors(newErrors);
         } else {
-          throw new Error(`${response.status} (${response.statusText})`)
+          throw new Error(`${response.status} (${response.statusText})`);
         }
       }
       const body = await response.json();
@@ -99,11 +99,7 @@ const NewDogForm = ({ user }) => {
         </h5>
         <label>
           Name:
-          <input
-            type="text"
-            name="dogName"
-            value={newDog.dogName}
-            onChange={handleInputChange} />
+          <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
         </label>
         <label>
           Description (Optional):
