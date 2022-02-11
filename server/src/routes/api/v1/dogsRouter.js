@@ -14,22 +14,24 @@ dogsRouter.get("/", async (req, res) => {
   try {
     const dogs = await Dog.query()
     const serializedDogs = await DogSerializer.getDogCollectionDetails(dogs)
+
     return res.status(200).json({ dogs: serializedDogs })
   } catch (error) {
-    console.log(error)
+
     return res.status(500).json({ errors: error })
   }
 })
 
 dogsRouter.post("/", uploadImage.single("image"), async (req, res) => {
+  const { file } = req
   try {
-    const { body } = req
-    const formInput = cleanUserInput(body)
-    const data = {
-      ...formInput,
-      image: req.file?.location,
+    const formInput = {
+      ...cleanUserInput(req.body),
+      image: file ? file.location : null
     }
-    const dog = await Dog.query().insertAndFetch(data)
+
+    const dog = await Dog.query().insertAndFetch(formInput)
+
     return res.status(201).json({ dog })
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -41,14 +43,15 @@ dogsRouter.post("/", uploadImage.single("image"), async (req, res) => {
 })
 
 dogsRouter.get("/:id", async (req, res) => {
+  const { user } = req
   try {
     const dog = await Dog.query().findById(req.params.id)
-    const userId = req.user?.id
+    const userId =  user ? user.id : null
     const serializedDog = await DogSerializer.getDogDetail(dog, userId)
 
     return res.status(200).json({ dog: serializedDog })
   } catch (error) {
-    console.log(error)
+
     return res.status(500).json({ errors: error })
   }
 })

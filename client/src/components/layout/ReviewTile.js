@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
-const ReviewTile = ({ review, makeNewVote, user }) => {
-  const { rating, description, upVotes, downVotes, userVote, userId } = review;
+const ReviewTile = ({ review, makeNewVote, user, deleteReview }) => {
+  const { rating, description, upVotes, downVotes, userVote, userId, userName } = review;
 
   const linkVisibility = user?.id === userId;
 
   const [showEditForm, setShowEditForm] = useState(false);
+  const [reviewData, setReviewData] = useState({ description, rating })
   const [editedReview, setEditedReview] = useState({ description, rating });
 
   let thumbUpColor = userVote === "up" ? "orange" : "grey";
@@ -31,29 +32,13 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
         throw error;
       }
       const body = await response.json();
+      console.log(editedReview)
+
     } catch (error) {
       console.log(`Error in fetch: ${error.message}`);
     }
   };
-
-  const deleteReview = async (reviewId) => {
-    try {
-      const response = await fetch(`/api/v1/users/${user.id}/${reviewId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        const errorMessage = `${response.status} ${response.statusText}`;
-        const error = new Error(errorMessage);
-        throw error;
-      }
-      const body = await response.json();
-    } catch (error) {
-      console.error(`Error in fetch: ${error.message}`);
-    }
-  };
+  
   const editHandler = (event) => {
     event.preventDefault();
     setShowEditForm(!showEditForm);
@@ -74,6 +59,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     editReview(editedReview, review.id);
+    setReviewData(editedReview)
     setShowEditForm(false);
   };
 
@@ -88,8 +74,8 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
   return (
     <div className="grid-x review-tile">
       <div className="cell small-10">
-        <h5>{review.userName}</h5>
-        <p>{description}</p>
+        <h5>{userName}</h5>
+        <p>{reviewData.description}</p>
         <div className="vote-block">
           <div className="upvotes">
             <FontAwesomeIcon
@@ -116,7 +102,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
         )}
       </div>
       <div className="cell small-2 dog-rating">
-        <h3>{rating}/10</h3>
+        <h3>{reviewData.rating}/10</h3>
       </div>
 
       {showEditForm && (
