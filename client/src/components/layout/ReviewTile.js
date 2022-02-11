@@ -6,7 +6,7 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 const ReviewTile = ({ review, makeNewVote, user }) => {
-  const { rating, description, upVotes, downVotes, userVote, reviewId, userId } = review;
+  const { rating, description, upVotes, downVotes, userVote, userId } = review;
 
   const linkVisibility = user?.id === userId;
 
@@ -38,7 +38,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
 
   const deleteReview = async (reviewId) => {
     try {
-      const response = await fetch(`/api/v1/users/${userId}/${reviewId}`, {
+      const response = await fetch(`/api/v1/users/${user.id}/${reviewId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,6 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
         throw error;
       }
       const body = await response.json();
-      setUser(body.data);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
@@ -100,7 +99,7 @@ const ReviewTile = ({ review, makeNewVote, user }) => {
             />
             {upVotes}
           </div>
-          <div className="downvoteS">
+          <div className="downvotes">
             <FontAwesomeIcon
               onClick={downVoteHandler}
               icon={faThumbsDown}
