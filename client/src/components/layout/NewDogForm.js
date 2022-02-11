@@ -17,11 +17,11 @@ const NewDogForm = ({ user }) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [fileName, setFileName] = useState("");
 
-  const handleImageUpload = (acceptedImage) => {
+  const handleImageUpload = (acceptedFiles) => {
     setFileName(acceptedFiles[0].name);
     setNewDog({
       ...newDog,
-      image: acceptedImage[0],
+      image: acceptedFiles[0],
     });
   };
 
