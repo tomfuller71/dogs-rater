@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import EditForm from "./EditForm";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 const MyReviewTile = (props) => {
+  const { upVotes, downVotes } = props.review;
+
   const { review, deleteReview, editReview } = props;
   const { rating, description, dogName, dogId, id } = review;
   const [showEditForm, setShowEditForm] = useState(false);
@@ -35,39 +42,36 @@ const MyReviewTile = (props) => {
   };
 
   return (
-    <div className="grid-x callout review-tile">
-      <div className="cell small-9">
-        <Link to={`/dogs/${dogId}`}>
-          <h3>{dogName}</h3>
-        </Link>
+    <div className="grid-x review-tile">
+      <div className="cell small-10">
+        <h5>{dogName}</h5>
         <p>{description}</p>
+        <div className="profile vote-block">
+          <div className="upvotes">
+            <FontAwesomeIcon icon={faThumbsUp} className="icon" />
+            {upVotes}
+          </div>
+          <div className="downvotes">
+            <FontAwesomeIcon icon={faThumbsDown} className="icon" />
+            {downVotes}
+          </div>
+        </div>
+
+        <div className="edit-links">
+          <a onClick={editHandler}>Edit</a>
+          <a onClick={deleteHandler}>Delete</a>
+        </div>
       </div>
-      <div className="cell small-3 dog-rating">{rating} / 10</div>
-      <a onClick={editHandler}>Edit</a>
-      <a onClick={deleteHandler}>Delete</a>
+      <div className="cell small-2 dog-rating">
+        <h3>{rating}/10</h3>
+      </div>
+
       {showEditForm && (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Edit review
-            <input
-              type="text"
-              name="description"
-              onChange={handleInputChange}
-              value={editedReview.description}
-            />
-          </label>
-          <label>
-            Rating
-            <input
-              type="number"
-              name="rating"
-              onChange={handleInputChange}
-              value={editedReview.rating}
-            />
-          </label>
-          <input className="button" type="submit" value="Submit" />
-          <button onClick={cancelHandler}>cancel</button>
-        </form>
+        <EditForm
+          editedReview={editedReview}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
       )}
     </div>
   );

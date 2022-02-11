@@ -141,8 +141,11 @@ const DogShowPage = (props) => {
     setReviewFormVisibility(!reviewFormVisibility);
   };
 
+  let ratingClass = null;
+
   let emptyReviews = null;
   if (!dog.reviews.length) {
+    ratingClass = "hide";
     emptyReviews = (
       <div className="empty-reviews">
         <h3>It's heckin' empty. Be the first to write a review.</h3>
@@ -156,9 +159,6 @@ const DogShowPage = (props) => {
     <div className="grid-container fixed">
       <h1>{dog.dogName}</h1>
       {dogDescription}
-      <a className="show-review" onClick={reviewClickHandler}>
-        Review {dog.dogName}
-      </a>
       <div className="grid-x grid-margin-x fullheight">
         <div
           className="cell small-12 large-5 dog-pic"
@@ -173,7 +173,7 @@ const DogShowPage = (props) => {
               reviewClickHandler={reviewClickHandler}
             />
           )}
-          <h4>{dog.rating}/10</h4>
+          <h4 className={ratingClass}>{dog.rating}/10</h4>
           <ErrorList errors={errors} />
         </div>
 
@@ -181,6 +181,9 @@ const DogShowPage = (props) => {
           {emptyReviews}
           <div className="overflow">{reviewsList}</div>
         </div>
+        <a className="show-review" onClick={reviewClickHandler}>
+          Review {dog.dogName}
+        </a>
       </div>
     </div>
   );

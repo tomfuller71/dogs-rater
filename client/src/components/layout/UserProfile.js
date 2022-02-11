@@ -84,14 +84,16 @@ const UserProfile = (props) => {
 
   return (
     <div className="grid-container profile">
-      <div className="cell small-10">
-        <h1>User Profile</h1>
-        <div className="callout">
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
+      <div className="grid-x grid-margin-x my-stuff">
+        <div className="cell small-12">
+          <h1>My profile</h1>
+
+          <p className="user-info">
+            Name: {user.name}
+            <br />
+            Email: {user.email}
+          </p>
         </div>
-      </div>
-      <div className="grid-x">
         <div className="cell small-12 large-5">
           <h3>My Dogs</h3>
           <ul>{dogs}</ul>
