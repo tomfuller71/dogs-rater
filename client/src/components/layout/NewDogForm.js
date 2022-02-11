@@ -21,16 +21,23 @@ const NewDogForm = ({ user }) => {
     setFileName(acceptedFiles[0].name);
     setNewDog({
       ...newDog,
-      image: acceptedImage[0],
+      image: acceptedFiles[0],
     });
   };
 
   const getNewDog = async (event) => {
+    const userId = user.id;
     const newDogBody = new FormData();
-    for (const key of Object.keys(newDog)) {
-      newDogBody.append(key, newDog[key])
-    }
-    newDogBody.append("userId", user,id);
+    newDogBody.append("dogName", newDog.dogName);
+    newDogBody.append("description", newDog.description);
+    newDogBody.append("image", newDog.image);
+    newDogBody.append("userId", userId);
+    // const newDogBody = new FormData();
+    // for (const key of Object.keys(newDog)) {
+    //   newDogBody.append(key, newDog[key])
+    // }
+    // newDogBody.append("userId", user.id);
+    
 
     try {
       const response = await fetch("/api/v1/dogs", {
