@@ -125,6 +125,7 @@
   height: 92vh;
   overflow: hidden;
   margin: 0 auto;
+  padding-top: 60px;
 }
 
 .fullheight {
@@ -172,5 +173,36 @@
     :hover {
       color: #8f8f8f;
     }
+  }
+}
+
+a.show-review {
+  background-color: var(--orange);
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  margin-left: 15px;
+
+  a:hover {
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .fixed.grid-container {
+    height: 100vh;
+    overflow: scroll;
+    margin: 0 auto;
+  }
+
+  .fullheight {
+    max-height: none;
+  }
+
+  .overflow {
+    height: 100%;
+    position: relative;
+    overflow-y: scroll;
   }
 }

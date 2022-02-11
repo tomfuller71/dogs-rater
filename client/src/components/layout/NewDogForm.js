@@ -15,8 +15,10 @@ const NewDogForm = ({ user }) => {
   const [newDog, setNewDog] = useState(defaultFormValue);
   const [errors, setErrors] = useState([]);
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [fileName, setFileName] = useState("");
 
-  const handleImageUpload = (acceptedImage) => {
+  const handleImageUpload = (acceptedFiles) => {
+    setFileName(acceptedFiles[0].name);
     setNewDog({
       ...newDog,
       image: acceptedImage[0],
@@ -80,6 +82,7 @@ const NewDogForm = ({ user }) => {
       <h1>Add a New Dog</h1>
 
       <ErrorList errors={errors} />
+
       <form onSubmit={handleSubmit}>
         <Dropzone onDrop={handleImageUpload}>
           {({ getRootProps, getInputProps }) => (
@@ -91,6 +94,9 @@ const NewDogForm = ({ user }) => {
             </section>
           )}
         </Dropzone>
+        <h5 className="file-name">
+          <strong>You've selected:</strong> {fileName}
+        </h5>
         <label>
           Name:
           <input
