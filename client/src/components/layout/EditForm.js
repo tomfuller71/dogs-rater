@@ -27,7 +27,7 @@ const EditForm = ({ editedReview, handleInputChange, handleSubmit }) => {
           <option value="20">20</option>
         </select>
       </label>
-      <input type="submit" value="Save changes" className="btn"></input>
+      <input type="submit" value="Save changes" className="button"></input>
     </form>
   );
 };
