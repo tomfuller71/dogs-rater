@@ -91,9 +91,28 @@
   input[type="number"] {
     border: none;
   }
+
+  .button-group {
+    column-gap: 12px;
+    margin-top: 16px;
+    .button {
+      font-size: 1.1rem;
+      background-color: var(--slate);
+    }
+    .button:hover {
+      background-color: var(--charcoal-blue);
+    }
+    .cancel.button {
+      background-color: transparent;
+      border: 2px solid white;
+    }
+    .cancel.button:hover {
+      background-color: var(--slate);
+      border: 2px solid var(--slate);
+    }
+  }
 }
-.buttton-group {
-}
+
 .flex {
   display: flex;
   justify-content: space-between;
@@ -122,10 +141,9 @@
 }
 
 .fixed.grid-container {
-  height: 92vh;
-  overflow: hidden;
+  height: 96vh;
   margin: 0 auto;
-  padding-top: 60px;
+  padding-top: 30px;
 }
 
 .fullheight {
@@ -176,19 +194,17 @@
   }
 }
 
-a.show-review {
+a.show-button {
   background-color: var(--orange);
-  padding: 10px 20px;
+  padding: 12px 30px;
   font-size: 1.1rem;
   font-weight: 500;
-  color: #fff;
-  margin-left: 15px;
-
-  a:hover {
-    color: #fff !important;
-  }
+  color: white;
 }
-
+a.show-button:hover {
+  color: white;
+  background-color: var(--slate);
+}
 @media (max-width: 1024px) {
   .fixed.grid-container {
     height: 100vh;
@@ -204,5 +220,20 @@ a.show-review {
     height: 100%;
     position: relative;
     overflow-y: scroll;
+  }
+}
+
+.empty-reviews {
+  h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+  a {
+    color: var(--orange);
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  a:hover {
+    color: var(--slate);
   }
 }

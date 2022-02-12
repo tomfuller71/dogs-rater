@@ -60,14 +60,17 @@ h2 {
   margin: 0 0 40px;
   font-weight: 500;
 }
-
-.btn {
+.button {
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 12px;
   color: white;
-  background-color: var(--carolina-blue);
-  border: none;
-  padding: 12px 22px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  background-color: var(--orange);
+}
+
+.button:hover {
+  background-color: var(--slate);
 }
 
 .dog.cell img {

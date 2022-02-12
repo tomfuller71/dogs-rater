@@ -22,7 +22,7 @@
   "version": "0.0.1",
   "name": "dogs-rater-server",
   "engines": {
-    "node": "^14.15"
+    "node": "14.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

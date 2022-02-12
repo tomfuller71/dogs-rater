@@ -2,6 +2,14 @@
   opacity: 30%;
   margin-bottom: 20px;
 }
+.grid-container.profile,
+.my-stuff {
+  height: 96vh;
+}
+.profile-column {
+  overflow-y: scroll;
+  height: 80%;
+}
 
 .my-stuff {
   margin-top: 50px;
@@ -13,11 +21,13 @@
 
 .user-info {
   font-size: 1.2rem;
-  font-weight: 500;
   line-height: 160%;
 }
 
 .profile {
+  h1 {
+    font-size: 3rem;
+  }
   h3 {
     font-weight: 600;
     font-size: 1.8rem;

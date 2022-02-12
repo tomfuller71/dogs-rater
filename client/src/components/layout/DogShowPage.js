@@ -171,22 +171,25 @@ const DogShowPage = (props) => {
   };
 
   let ratingClass = null;
+  let reviewButtonClass = `show-button`;
+  if (reviewFormVisibility) {
+    reviewButtonClass += ` hide`;
+  }
 
   let emptyReviews = null;
   if (!dog.reviews.length) {
     ratingClass = "hide";
     emptyReviews = (
       <div className="empty-reviews">
-        <h3>It's heckin' empty. Be the first to write a review.</h3>
-        <div onClick={reviewClickHandler} className="button">
-          Review {dog.dogName}
-        </div>
+        <h3>It's heckin' empty</h3>
+        <a onClick={reviewClickHandler}>Be the first to review {dog.dogName}</a>
       </div>
     );
   }
   return (
     <div className="grid-container fixed">
       <h1>{dog.dogName}</h1>
+
       {dogDescription}
       <div className="grid-x grid-margin-x fullheight">
         <div
@@ -210,10 +213,10 @@ const DogShowPage = (props) => {
           {emptyReviews}
           <div className="overflow">{reviewsList}</div>
         </div>
-        <a className="show-review" onClick={reviewClickHandler}>
-          Review {dog.dogName}
-        </a>
       </div>
+      <a className={reviewButtonClass} onClick={reviewClickHandler}>
+        Review {dog.dogName}
+      </a>
     </div>
   );
 };
