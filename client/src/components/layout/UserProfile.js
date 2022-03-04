@@ -89,19 +89,19 @@ const UserProfile = (props) => {
           <h1>My profile</h1>
 
           <p className="user-info">
-            Name: {user.name}
+            <strong>Name:</strong> {user.name}
             <br />
-            Email: {user.email}
+            <strong>Email:</strong> {user.email}
           </p>
         </div>
         <div className="cell small-12 large-5">
-          <h3>My Dogs</h3>
-          <ul>{dogs}</ul>
+          <h3>My dogs</h3>
+          <ul className="profile-column">{dogs}</ul>
         </div>
 
-        <div className="cell small-12 large-7">
-          <h3>My Reviews</h3>
-          <ul>{reviews}</ul>
+        <div className="cell small-12 large-7 overflow">
+          <h3>My reviews</h3>
+          <ul className="profile-column">{reviews}</ul>
         </div>
       </div>
     </div>
