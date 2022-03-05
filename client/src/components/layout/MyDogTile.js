@@ -10,7 +10,7 @@ const MyDogTile = ({ dog }) => {
   }
 
   return (
-    <div className="dog cell card small-12 medium-6">
+    <div className="dog cell card small-12 large-6">
       <Link to={`/dogs/${id}`}>
         <div
           className="card-top"

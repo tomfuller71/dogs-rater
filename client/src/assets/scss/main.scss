@@ -21,6 +21,7 @@
   --darker-orange: #d33c0e;
   --translucent-orange: #ec4e20cc;
   --slate: #637081;
+  --translucent-slate: #637081dd;
   --green: #929982;
   --green2: #60935d;
   --charcoal-blue: #364156;
@@ -53,7 +54,7 @@ span {
 h1,
 h2 {
   font-weight: 600;
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 
 .subhead {
@@ -61,7 +62,7 @@ h2 {
   font-weight: 500;
 }
 
-.btn {
+.button {
   color: white;
   background-color: var(--carolina-blue);
   border: none;

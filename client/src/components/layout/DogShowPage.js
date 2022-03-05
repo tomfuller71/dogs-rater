@@ -177,17 +177,19 @@ const DogShowPage = (props) => {
     ratingClass = "hide";
     emptyReviews = (
       <div className="empty-reviews">
-        <h3>It's heckin' empty. Be the first to write a review.</h3>
-        <div onClick={reviewClickHandler} className="button">
-          Review {dog.dogName}
-        </div>
+        <h3>It's heckin' empty here</h3>
+        <a onClick={reviewClickHandler}>Be the first to write a review.</a>
       </div>
     );
   }
   return (
     <div className="grid-container fixed">
-      <h1>{dog.dogName}</h1>
+      <h1>{dog.dogName} </h1>
+
       {dogDescription}
+      <a className="mobile-link button" onClick={reviewClickHandler}>
+        Review {dog.dogName}
+      </a>
       <div className="grid-x grid-margin-x fullheight">
         <div
           className="cell small-12 large-5 dog-pic"
@@ -202,22 +204,16 @@ const DogShowPage = (props) => {
               reviewClickHandler={reviewClickHandler}
             />
           )}
-          <h4 className={ratingClass}>{dog.rating}/10</h4>
+          <h4 className={ratingClass}>{dog.rating}/10 </h4>
+
           <ErrorList errors={errors} />
         </div>
 
         <div className="cell small-12 large-7 reviews">
           {emptyReviews}
 
-          <a className="show-for-small-only" onClick={reviewClickHandler}>
-            Review {dog.dogName}
-          </a>
-
           <div className="overflow">{reviewsList}</div>
         </div>
-        <a className="show-review show-for-medium" onClick={reviewClickHandler}>
-          Review {dog.dogName}
-        </a>
       </div>
     </div>
   );

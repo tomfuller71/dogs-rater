@@ -78,43 +78,45 @@ const NewDogForm = ({ user }) => {
   }
 
   return (
-    <div className="grid-container">
-      <h1>Add a New Dog</h1>
+    <div className="form-background">
+      <div className="form grid-container">
+        <h1>Add a New Dog</h1>
 
-      <ErrorList errors={errors} />
+        <ErrorList errors={errors} />
 
-      <form onSubmit={handleSubmit}>
-        <Dropzone onDrop={handleImageUpload}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <div className="drop-zone" {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag and drop your dog pic, or click to upload</p>
-              </div>
-            </section>
-          )}
-        </Dropzone>
-        <h5 className="file-name">
-          <strong>You've selected:</strong> {fileName}
-        </h5>
-        <label>
-          Name:
-          <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
-        </label>
-        <label>
-          Description (Optional):
-          <input
-            type="text"
-            name="description"
-            onChange={handleInputChange}
-            value={newDog.description}
-          />
-        </label>
-        <div className="button-group">
-          <input className="button" type="submit" value="Submit" />
-          <input className="button" type="button" value="Clear Form" onClick={clearForm} />
-        </div>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <Dropzone onDrop={handleImageUpload}>
+            {({ getRootProps, getInputProps }) => (
+              <section>
+                <div className="drop-zone" {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>Drag and drop your dog pic, or click to upload</p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+          <h5 className="file-name">
+            <strong>You've selected:</strong> {fileName}
+          </h5>
+          <label>
+            Name:
+            <input type="text" name="dogName" value={newDog.dogName} onChange={handleInputChange} />
+          </label>
+          <label>
+            Description (Optional):
+            <input
+              type="text"
+              name="description"
+              onChange={handleInputChange}
+              value={newDog.description}
+            />
+          </label>
+          <div className="button-group">
+            <input className="button" type="submit" value="Submit" />
+            <input className="button" type="button" value="Clear Form" onClick={clearForm} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

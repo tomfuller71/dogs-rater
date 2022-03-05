@@ -8,10 +8,21 @@
   font-weight: 700;
 }
 
+.empty-reviews {
+  h3 {
+    font-weight: 600;
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+  }
+}
+
 .cell.dog-pic {
   position: relative;
   max-height: 500px;
-  min-height: 440px;
+  min-height: 390px;
   margin-bottom: 20px;
   background-position: center center;
   background-size: cover;
@@ -74,7 +85,8 @@
   width: 100%;
   height: 100%;
   padding: 30px;
-  background-color: var(--translucent-orange);
+  background-color: var(--translucent-slate);
+  background-blend-mode: multiply;
   z-index: 11;
   position: relative;
 }
@@ -186,6 +198,29 @@ a.show-review {
     color: #fff !important;
   }
 }
+.button-group {
+  margin-top: 15px;
+  .review.button {
+    font-size: 1rem;
+    background-color: var(--orange);
+    &:hover {
+      background-color: white;
+      color: var(--orange);
+      transition: all 500ms;
+    }
+  }
+  .cancel.button {
+    background-color: transparent;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: transparent;
+      color: var(--orange);
+      text-decoration: underline;
+      transition: all 400ms;
+    }
+  }
+}
 
 @media (max-width: 1024px) {
   .fixed.grid-container {
@@ -202,5 +237,10 @@ a.show-review {
     height: 100%;
     position: relative;
     overflow-y: scroll;
+  }
+}
+@media (max-width: 1024px) and (min-width: 700px) {
+  .dog-pic {
+    height: 540px;
   }
 }

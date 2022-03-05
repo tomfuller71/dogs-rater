@@ -50,7 +50,7 @@ const DogReviewForm = (props) => {
         </label>
 
         <div className="button-group">
-          <input className="button" type="submit" value="Submit" />
+          <input className="review button" type="submit" value="Submit" />
           <div className="cancel button" onClick={props.reviewClickHandler}>
             Cancel
           </div>
