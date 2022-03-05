@@ -57,18 +57,30 @@ h2 {
   font-size: 3rem;
 }
 
-.subhead {
-  margin: 0 0 40px;
-  font-weight: 500;
+.index-page {
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.05;
+    margin: 50px 0 16px;
+  }
+  h4.subhead {
+    margin: 0 0 40px;
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
 }
 
 .button {
   color: white;
-  background-color: var(--carolina-blue);
+  background-color: var(--orange);
   border: none;
   padding: 12px 22px;
   font-size: 0.95rem;
   font-weight: 600;
+
+  &:hover {
+    background-color: var(--darker-orange);
+  }
 }
 
 .dog.cell img {
@@ -84,9 +96,10 @@ h2 {
 
 .dog.card {
   border: none;
+  background-color: transparent;
 }
 .dog.card:hover {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
   .orange {
     background-color: var(--darker-orange);
   }
@@ -104,8 +117,8 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-top: 8px;
-  padding-bottom: 0px;
+  padding-top: 12px;
+  padding-bottom: 4px;
 
   .review-count {
     text-align: right;
@@ -119,10 +132,18 @@ h2 {
   .dog-name {
     vertical-align: middle;
     color: white;
-    font-size: 1.5rem;
+
+    h4 {
+      font-weight: 700;
+      font-size: 1.35rem;
+    }
   }
-  h4 {
-    font-weight: 600;
+
+  .review-count {
+    p {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
   }
 }
 
@@ -202,4 +223,19 @@ h4.rating {
 
 .orange {
   color: orange;
+}
+
+@media (max-width: 800px) {
+  .index-page {
+    h1 {
+      font-size: 2.8rem;
+      margin: 50px 0 10px;
+    }
+    h4.subhead {
+      margin: 0 0 40px;
+      font-weight: 500;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+  }
 }

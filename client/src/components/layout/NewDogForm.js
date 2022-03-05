@@ -113,7 +113,7 @@ const NewDogForm = ({ user }) => {
           </label>
           <div className="button-group">
             <input className="button" type="submit" value="Submit" />
-            <input className="button" type="button" value="Clear Form" onClick={clearForm} />
+            <input className="button clear" type="button" value="Clear Form" onClick={clearForm} />
           </div>
         </form>
       </div>

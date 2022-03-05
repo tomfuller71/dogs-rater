@@ -187,8 +187,8 @@ const DogShowPage = (props) => {
       <h1>{dog.dogName} </h1>
 
       {dogDescription}
-      <a className="mobile-link button" onClick={reviewClickHandler}>
-        Review {dog.dogName}
+      <a className="review-link" onClick={reviewClickHandler}>
+        Write a review
       </a>
       <div className="grid-x grid-margin-x fullheight">
         <div

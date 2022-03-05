@@ -3,7 +3,7 @@ import ReviewsSerializer from "./ReviewSerializer.js"
 
 class DogSerializer {
   static async getDogDetail(dog, userId) {
-    const allowedAttributes = ["id", "dogName", "description", "image"]
+    const allowedAttributes = ["id", "dogName", "description", "image", "createdAt"]
 
     let serializedDog = {}
     for (const attribute of allowedAttributes) {

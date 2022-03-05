@@ -12,3 +12,10 @@
 .file-name {
   margin: 20px 0;
 }
+
+.button-group {
+  .button.clear {
+    background-color: transparent;
+    color: var(--orange);
+  }
+}

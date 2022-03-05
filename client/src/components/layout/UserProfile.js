@@ -94,7 +94,7 @@ const UserProfile = (props) => {
     <div className="grid-container profile">
       <h1>My profile</h1>
       <div className="grid-x grid-margin-x my-stuff">
-        <div className="cell small-12 medium-8">
+        <div className="cell small-12 medium-8 large-9">
           <div className="view-links">
             <a
               className={currentView === "reviews" ? "active" : "inactive"}
