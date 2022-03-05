@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Fetcher from "./services/Fetcher";
-import { Link } from "react-router-dom";
+import { Link, Route, useLocation } from "react-router-dom";
 
 import MyReviewTile from "./MyReviewTile";
-import DogTile from "./DogTile";
+import MyDogTile from "./MyDogTile";
 
 const UserProfile = (props) => {
   const userId = props.user.id;
 
+  const [currentView, setCurrentView] = useState("reviews");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -20,6 +21,13 @@ const UserProfile = (props) => {
     if (response.ok) {
       return setUser(response.data.user);
     }
+  };
+
+  const reviewClickHandler = (event) => {
+    setCurrentView("reviews");
+  };
+  const dogClickHandler = (event) => {
+    setCurrentView("dogs");
   };
 
   useEffect(() => {
@@ -68,7 +76,7 @@ const UserProfile = (props) => {
   };
 
   const dogs = user.dogs.map((dog) => {
-    return <DogTile key={dog.id} dog={dog} />;
+    return <MyDogTile key={dog.id} dog={dog} />;
   });
 
   const reviews = user.reviews.map((review) => {
@@ -84,24 +92,33 @@ const UserProfile = (props) => {
 
   return (
     <div className="grid-container profile">
+      <h1>My profile</h1>
       <div className="grid-x grid-margin-x my-stuff">
-        <div className="cell small-12">
-          <h1>My profile</h1>
-
-          <p className="user-info">
+        <div className="cell small-12 medium-8">
+          <div className="view-links">
+            <a
+              className={currentView === "reviews" ? "active" : "inactive"}
+              onClick={reviewClickHandler}
+            >
+              My reviews
+            </a>
+            <a className={currentView === "dogs" ? "active" : "inactive"} onClick={dogClickHandler}>
+              My dogs
+            </a>
+          </div>
+          {currentView === "reviews" ? (
+            <div className="profile-column overflow cell small-12">{reviews}</div>
+          ) : (
+            <div className="profile-column overflow grid-x grid-margin-x">{dogs}</div>
+          )}
+        </div>
+        <div className="cell small-12 medium-4 large-3 user-info">
+          <h3>My info</h3>
+          <p>
             <strong>Name:</strong> {user.name}
             <br />
             <strong>Email:</strong> {user.email}
           </p>
-        </div>
-        <div className="cell small-12 large-5">
-          <h3>My dogs</h3>
-          <ul className="profile-column">{dogs}</ul>
-        </div>
-
-        <div className="cell small-12 large-7 overflow">
-          <h3>My reviews</h3>
-          <ul className="profile-column">{reviews}</ul>
         </div>
       </div>
     </div>

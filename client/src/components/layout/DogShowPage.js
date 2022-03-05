@@ -208,9 +208,14 @@ const DogShowPage = (props) => {
 
         <div className="cell small-12 large-7 reviews">
           {emptyReviews}
+
+          <a className="show-for-small-only" onClick={reviewClickHandler}>
+            Review {dog.dogName}
+          </a>
+
           <div className="overflow">{reviewsList}</div>
         </div>
-        <a className="show-review" onClick={reviewClickHandler}>
+        <a className="show-review show-for-medium" onClick={reviewClickHandler}>
           Review {dog.dogName}
         </a>
       </div>

@@ -1,13 +1,13 @@
 .logo {
   width: 100%;
-  max-width: 290px;
+  max-width: 230px;
 }
 
 .menu-container {
   background-color: var(--slate);
   width: 100%;
   vertical-align: middle;
-  padding: 15px 30px;
+  padding: 20px 30px;
   position: sticky;
   top: 0px;
   z-index: 100;
@@ -29,7 +29,7 @@ ul.menu {
 .header .menu li,
 .header .menu a {
   color: white;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   padding: 0px;
 }
 
@@ -93,14 +93,5 @@ ul.menu {
   }
   .header-left {
     flex-basis: 10%;
-  }
-}
-
-@media (min-width: 900px) {
-  .header .menu li,
-  .header .menu a {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1.1rem;
   }
 }

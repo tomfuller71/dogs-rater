@@ -23,6 +23,7 @@ class ReviewsSerializer {
     return {
       ...serializedReview,
       dogName: dog.dogName,
+      dogPic: dog.image,
       userName: user.name,
       dogId: dog.id,
       ...votes,
